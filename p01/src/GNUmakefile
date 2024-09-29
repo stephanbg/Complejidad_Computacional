@@ -1,12 +1,12 @@
 # Universidad de La Laguna
 # Escuela Superior de Ingeniería y Tecnología
 # Grado en Ingeniería Informática
-# Asignatura: 
+# Asignatura: Complejidad Computacional
 # Curso: 4º
-# Práctica 4: 
+# Práctica 1: Implementación de Funciones Primitivas Recursivas
 # Autor: Stephan Brommer Gutiérrez
 # Correo: alu0101493497@ull.es
-# Fecha:
+# Fecha: 3 de Octubre
 # Archivo GNUMakefile
 
 CXX = g++                                     # The C++ compiler command

@@ -1,3 +1,18 @@
+/**
+ * Universidad de La Laguna
+ * Escuela Superior de Ingeniería y Tecnología
+ * Grado en Ingeniería Informática
+ * Complejidad Computacional
+ *
+ * @author Stephan Brommer Gutiérrez
+ * @since 3 de Octubre de 2024
+ * @file comprobarParametros.cc
+ * @brief Implementación de la clase ComprobarParametros en la que se comprueban los parámetros de entrada
+ * 
+ * @see {@link https://campusingenieriaytecnologia2425.ull.es/pluginfile.php/11667/mod_resource/content/19/CC_2425_Practica1.pdf}
+ * @see {@link https://github.com/stephanbg/Complejidad_Computacional/tree/main/p01}
+ */
+
 #include "comprobarParametros.h"
 
 /**
@@ -24,22 +39,31 @@ void ComprobarParametros::comprobarCantidadParametros(const int kArgc) {
   if (kArgc != 3) throw kError;
 }
 
-void ComprobarParametros::comprobarNumeroNatural(const std::string& parametro) {
- int indice = 0;
- std::string mensaje_error;
- if (parametro[0] == '+') indice = 1;
- else if (parametro[0] == '-') {
-  mensaje_error = "No puede ser número negativo";
-  throw mensaje_error;
- }
- for (; indice < parametro.size(); ++indice) {
-   if (!std::isdigit(parametro[indice])) {
-    mensaje_error = "Algún caracter no numérico";
+/**
+ * @brief Comprueba si el parámetro de entrada es un número natural.
+ * 
+ * @param kParametro el parámetro de entrada.
+ * @throw Lanza una excepción si no es un número natural.
+ */
+void ComprobarParametros::comprobarNumeroNatural(const std::string& kParametro) {
+  int indice = 0;
+  std::string mensaje_error;
+  if (kParametro[0] == '+') indice = 1;
+  else if (kParametro[0] == '-') {
+    mensaje_error = "No puede ser número negativo.";
     throw mensaje_error;
-   }
- }
+  }
+  for (; indice < kParametro.size(); ++indice) {
+    if (!std::isdigit(kParametro[indice])) {
+      mensaje_error = "Algún caracter no numérico.";
+      throw mensaje_error;
+    }
+  }
 }
 
+/**
+ * @brief Lanza un mensaje de ayuda al usuario.
+ */
 void ComprobarParametros::help() {
   std::cout << "El programa tiene que ser ejecutado de la siguiente manera:" << std::endl;
   std::cout << "./main x (primer número natural) y (segundo número natural)" << std::endl;
