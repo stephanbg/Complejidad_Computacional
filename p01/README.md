@@ -2,7 +2,7 @@
 
 ## Objetivo de la Práctica
 
-El propósito de esta práctica es implementar un programa que calcule la función potencia \( \text{potencia}(x, y) \) utilizando el enfoque de funciones primitivas recursivas.
+El propósito de esta práctica es implementar un programa que calcule la función potencia ***potencia(x,y)*** utilizando el enfoque de funciones primitivas recursivas.
 
 ---
 
