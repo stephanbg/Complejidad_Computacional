@@ -41,6 +41,7 @@ Al introducir parámetros válidos, el programa calculará la potencia, consider
 
 ## Notas Adicionales
 
+- Destacar que no cuento solo las llamadas recursivas, si no que creo dos funciones (casoBase y casoGeneral), en las que también cuento, por lo tanto, hay más llamadas a funciones y tarda más el programa.
 - Asegúrate de proporcionar números naturales como entrada (INCLUIDO el 0).
 - En caso de dudas o problemas, revisa el código fuente y la documentación asociada.
 
