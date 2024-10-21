@@ -12,18 +12,45 @@ bool APv::seAceptaCadena(const std::string& kCadena) {
     // 3. Salta los puntos ('.') en la cadena de entrada
     while (indiceCadena < kCadena.size() && kCadena[indiceCadena] == '.') indiceCadena++;    
     // 4. Comprobar si hemos procesado toda la cadena.
-    if (indiceCadena == kCadena.size()) return pila.empty();
+    if (indiceCadena == kCadena.size()) {
+      #ifdef TRAZA
+        std::cout << "----------------------------------------" << std::endl;
+        std::cout << std::left << std::setw(20) << "Estado final:" 
+                  << estadoActual << std::endl;
+        std::cout << std::left << std::setw(20) << "Cadena procesada:" 
+                  << kCadena << std::endl;
+        std::cout << std::left << std::setw(20) << "Pila final:";
+        mostrarPila(pila);
+      #endif     
+      return pila.empty();
+    }
     // 5. Recorrer las transiciones disponibles desde el estado actual.
     for (const Transicion& cadaTransicion : transiciones_) {
       // 6. Comprobar si la transición es válida.
       if (cadaTransicion.getEstadoOrigen() == estadoActual && 
         ((cadaTransicion.getSimboloTransicion() == kCadena[indiceCadena] || cadaTransicion.getSimboloTransicion() == '.') && 
         ((!pila.empty() && pila.top() == cadaTransicion.getElementoAExtraerDePila()) || cadaTransicion.getElementoAExtraerDePila() == '.'))) {
+        #ifdef TRAZA
+          const std::string kCopiaCadena = kCadena.substr(indiceCadena, kCadena.size());
+          std::cout << "----------------------------------------" << std::endl;
+          std::cout << std::left << std::setw(15) << "Estado:" 
+                    << estadoActual << std::endl;
+          std::cout << std::left << std::setw(15) << "Cadena:" 
+                    << kCopiaCadena << std::endl;
+          std::cout << std::left << std::setw(15) << "Pila:";
+          mostrarPila(pila);
+          std::cout << std::left << std::setw(15) << "Transición:" 
+                    << cadaTransicion;
+        #endif          
         // 7. Actualizar el estado actual al estado destino de la transición.
         Estado nuevoEstado = cadaTransicion.getEstadoDestino();
         // 8. Realizar el pop en la pila si es necesario.
         if (!pila.empty() && cadaTransicion.getElementoAExtraerDePila() != '.') pila.pop();
-        for (const char c : cadaTransicion.getSimbolosAIntroducirEnPila()) {
+        /*for (int i = cadaTransicion.getSimbolosAIntroducirEnPila().size() - 1; i >= 0; --i) {
+          const char kSimbolo = cadaTransicion.getSimbolosAIntroducirEnPila()[i];
+          if (kSimbolo != '.') pila.push(kSimbolo);
+        }*/
+        for (auto c : cadaTransicion.getSimbolosAIntroducirEnPila()) {
           if (c != '.') pila.push(c);
         }
         // NO SE SI TENGO QUE ELIMINAR LOS PUNTOS PREVIAMENTE DE LA CADENA O CUANDO LOS LEA TRANSITAR PERO NO CONTAR O ALGO

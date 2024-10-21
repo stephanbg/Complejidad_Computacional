@@ -1,6 +1,7 @@
 #pragma once
 
 #include <functional>
+#include <iomanip>
 
 #include "../automataDePila.h"
 

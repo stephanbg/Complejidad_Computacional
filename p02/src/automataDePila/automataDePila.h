@@ -17,7 +17,7 @@ class AutomataDePila {
   const std::set<Estado> getEstados() const { return estados_; }
   const Alfabeto getAlfabeto() const { return alfabeto_; }
   const Alfabeto getAlfabetoPila() const { return alfabetoPila_; }
-  const std::vector<Transicion> getTransiciones() { return transiciones_; }
+  const std::vector<Transicion> getTransiciones() const { return transiciones_; }
   // Setters
   std::set<Estado>& setEstados() { return estados_; }
   Alfabeto& setAlfabeto() { return alfabeto_; }
@@ -34,4 +34,5 @@ class AutomataDePila {
   char simboloInicialPila_;
   std::vector<Transicion> transiciones_;
   std::stack<char> pila_;
+  void mostrarPila(const std::stack<char>&) const;
 };

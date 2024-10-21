@@ -28,10 +28,12 @@ int main(int argc, char* argv[]) {
     const AutomataDePila* automataConst = comprobarAutomata->getAutomataDePila();
     const APv* kAutomataConst = dynamic_cast<const APv*>(automataConst);
     APv* kAutomata = const_cast<APv*>(kAutomataConst);
+    bool cadenaValida;
     std::cout << *kAutomata << std::endl;
     for (int i = 2; i < argc; ++i) {
-      std::cout << "La cadena " << argv[i] << ": ";
-      if (kAutomata->seAceptaCadena(argv[i])) std::cout << "ACEPTADA";
+      cadenaValida = kAutomata->seAceptaCadena(argv[i]);
+      std::cout << "\nLa cadena " << argv[i] << ": ";
+      if (cadenaValida) std::cout << "ACEPTADA";
       else std::cout << "X";
       std::cout << std::endl;
     }

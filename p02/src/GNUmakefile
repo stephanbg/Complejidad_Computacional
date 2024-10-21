@@ -10,7 +10,7 @@
 # Archivo GNUMakefile
 
 CXX = g++                                     # The C++ compiler command
-CXXFLAGS = -std=c++20 -g     # The C++ compiler options (C++20, preserve debug symbols)
+CXXFLAGS = -std=c++20 -g                     # The C++ compiler options (C++20, preserve debug symbols)
 LDFLAGS =                                     # The linker options (if any)
 
 # Automatically find all .cc files in current directory and subdirectories
@@ -28,14 +28,17 @@ main: $(OBJS)
 %.o: %.cc
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
-# Indicate that the all and clean targets do not
-# correspond to actual files.
-.PHONY: all clean
+# Rule to enable trace mode
+traza: CXXFLAGS += -DTRAZA
+traza: all
+
+# Indicate that the all and clean targets do not correspond to actual files.
+.PHONY: all clean traza
 
 # The clean target removes all of the executable files
 # and object files produced by the build process
 # We can use it for additional housekeeping purposes
-clean :
+clean:
 	find . -name '*.o' -delete
 	rm -f main doc
 	rm -rf *~ basura b i
