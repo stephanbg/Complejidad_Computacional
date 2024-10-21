@@ -6,6 +6,6 @@
 
 class APv : public AutomataDePila {
  public:
-  virtual bool seAceptaCadena(const std::string&) const override; // Implementar algoritmo APv
+  virtual bool seAceptaCadena(const std::string&) override;
   friend std::ostream& operator<<(std::ostream&, const APv&);
 };

@@ -12,7 +12,7 @@
 class AutomataDePila {
  public:
   AutomataDePila() {}
-  virtual bool seAceptaCadena(const std::string&) const = 0;
+  virtual bool seAceptaCadena(const std::string&) = 0;
   // Getters
   const std::set<Estado> getEstados() const { return estados_; }
   const Alfabeto getAlfabeto() const { return alfabeto_; }
@@ -33,5 +33,5 @@ class AutomataDePila {
   Estado estadoInicial_;
   char simboloInicialPila_;
   std::vector<Transicion> transiciones_;
-  void mostrarPila(const std::stack<char>&) const;
+  std::stack<char> pila_;
 };

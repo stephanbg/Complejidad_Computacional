@@ -25,7 +25,9 @@ int main(int argc, char* argv[]) {
     ComprobarFicheroAutomata* comprobarAutomata = new ComprobarFormatoAPv();
     comprobarAutomata->analizarFicheroAutomata(argv[1]);
     // Todo correcto aqui y sería analizar palabras
-    const APv* kAutomata = dynamic_cast<const APv*>(comprobarAutomata->getAutomataDePila());
+    const AutomataDePila* automataConst = comprobarAutomata->getAutomataDePila();
+    const APv* kAutomataConst = dynamic_cast<const APv*>(automataConst);
+    APv* kAutomata = const_cast<APv*>(kAutomataConst);
     std::cout << *kAutomata << std::endl;
     for (int i = 2; i < argc; ++i) {
       std::cout << "La cadena " << argv[i] << ": ";
