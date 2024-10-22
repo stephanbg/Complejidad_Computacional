@@ -1,3 +1,23 @@
+/**
+ * Universidad de La Laguna
+ * Escuela Superior de Ingeniería y Tecnología
+ * Grado en Ingeniería Informática
+ * Complejidad Computacional
+ * Práctica 2: Programar un simulador de un autómata con pila
+ *
+ * @author Stephan Brommer Gutiérrez
+ * @since 14 de Octubre de 2024
+ * @file automataDePila.h
+ * @brief Declaración de la clase AutomataDePila que representa un autómata con pila.
+ * 
+ * Esta clase es la base para implementar un autómata de pila, proporcionando
+ * la estructura y las operaciones necesarias para procesar cadenas de entrada
+ * y determinar su aceptación según las transiciones definidas.
+ * 
+ * @see {@link https://campusingenieriaytecnologia2425.ull.es/pluginfile.php/11658/mod_resource/content/25/CC_2425_Practica2.pdf}
+ * @see {@link https://github.com/stephanbg/Complejidad_Computacional/tree/main/p02}
+ */
+
 #pragma once
 
 #include <iostream>
@@ -10,6 +30,14 @@
 #include "./estado/estado.h"
 #include "./transicion/transicion.h"
 
+/**
+ * @brief Clase base para un autómata de pila.
+ * 
+ * Esta clase proporciona métodos virtuales y atributos que son necesarios
+ * para implementar un autómata de pila. Las subclases deben implementar
+ * el método `seAceptaCadena` para definir la lógica específica de
+ * aceptación de cadenas.
+ */
 class AutomataDePila {
  public:
   AutomataDePila() {}

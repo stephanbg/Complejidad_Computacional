@@ -1,5 +1,36 @@
+/**
+ * Universidad de La Laguna
+ * Escuela Superior de Ingeniería y Tecnología
+ * Grado en Ingeniería Informática
+ * Complejidad Computacional
+ * Práctica 2: Programar un simulador de un autómata con pila
+ *
+ * @author Stephan Brommer Gutiérrez
+ * @since 14 de Octubre de 2024
+ * @file APv.cc
+ * @brief Implementación de la clase APv para el simulador de un autómata con pila.
+ * 
+ * Esta implementación define los métodos que permiten verificar si una cadena
+ * es aceptada por el autómata y proporciona una sobrecarga del operador de inserción
+ * para imprimir la información del autómata.
+ * 
+ * @see {@link https://campusingenieriaytecnologia2425.ull.es/pluginfile.php/11658/mod_resource/content/25/CC_2425_Practica2.pdf}
+ * @see {@link https://github.com/stephanbg/Complejidad_Computacional/tree/main/p02}
+ */
+
 #include "./APv.h"
 
+/**
+ * @brief Verifica si una cadena es aceptada por el autómata.
+ * 
+ * Este método evalúa la cadena de entrada y utiliza una función recursiva
+ * para explorar las transiciones del autómata. Acepta la cadena si se
+ * procesan todos los caracteres y la pila queda vacía.
+ * 
+ * @param kCadena Cadena de entrada que se desea verificar.
+ * @return true Si la cadena es aceptada por el autómata.
+ * @return false Si la cadena no es aceptada por el autómata.
+ */
 bool APv::seAceptaCadena(const std::string& kCadena) {
   // Verificar si todos los caracteres de la cadena están en el alfabeto
   for (const char c : kCadena) {
@@ -50,6 +81,16 @@ bool APv::seAceptaCadena(const std::string& kCadena) {
   return explorar(0, estadoInicial_, pila_); // Iniciar la exploración desde el estado inicial y la pila
 }
 
+/**
+ * @brief Sobrecarga del operador de inserción para imprimir el autómata.
+ * 
+ * Este método permite la impresión de los detalles del autómata, incluyendo sus estados,
+ * alfabeto, estado inicial, símbolo inicial de la pila y las transiciones.
+ * 
+ * @param os Flujo de salida donde se imprimirá el autómata.
+ * @param kAutomata El autómata que se desea imprimir.
+ * @return std::ostream& Flujo de salida modificado.
+ */
 std::ostream& operator<<(std::ostream& os, const APv& kAutomata) {
   os << "Autómata por Vacíado de Pila" << std::endl;
   os << "----------------------------" << std::endl;

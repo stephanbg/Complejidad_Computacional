@@ -1,7 +1,42 @@
+/**
+ * Universidad de La Laguna
+ * Escuela Superior de Ingeniería y Tecnología
+ * Grado en Ingeniería Informática
+ * Complejidad Computacional
+ * Práctica 2: Programar un simulador de un autómata con pila
+ *
+ * @author Stephan Brommer Gutiérrez
+ * @since 14 de Octubre de 2024
+ * @file comprobarFormatoAPv.cc
+ * @brief Implementación de la clase ComprobarFormatoAPv para analizar archivos de autómatas de pila (APv).
+ * 
+ * Esta clase proporciona la funcionalidad para leer y validar la estructura
+ * de un archivo que define un autómata de pila, asegurando que cumpla con
+ * el formato esperado y que los datos sean correctos.
+ * 
+ * @see {@link https://campusingenieriaytecnologia2425.ull.es/pluginfile.php/11658/mod_resource/content/25/CC_2425_Practica2.pdf}
+ * @see {@link https://github.com/stephanbg/Complejidad_Computacional/tree/main/p02}
+ */
+
 #include "./comprobarFormatoAPv.h"
 
+/**
+ * @brief Constructor de la clase ComprobarFormatoAPv que inicializa un nuevo objeto
+ *        de tipo APv para almacenar el autómata de pila que se está analizando.
+ */
 ComprobarFormatoAPv::ComprobarFormatoAPv() { automataDePila_ = new APv; }
 
+/**
+ * @brief Analiza un archivo de autómata de pila.
+ * 
+ * Este método abre el archivo especificado y lee su contenido línea por línea,
+ * procesando cada línea para extraer la información del autómata de pila, como
+ * estados, alfabeto y transiciones. Lanza excepciones si se encuentra algún
+ * error durante el análisis.
+ * 
+ * @param kNombreFichero Ruta del archivo que se desea analizar.
+ * @throws std::string Si ocurre un error al abrir o cerrar el archivo, o si el contenido es inválido.
+ */
 void ComprobarFormatoAPv::analizarFicheroAutomata(const std::string& kNombreFichero) {
   std::ifstream fichero(kNombreFichero);
   // Abrir Fichero
@@ -49,21 +84,54 @@ void ComprobarFormatoAPv::analizarFicheroAutomata(const std::string& kNombreFich
   }  
 }
 
+/**
+ * @brief Elimina comentarios de una línea de texto.
+ * 
+ * Este método procesa una línea de texto y elimina cualquier comentario
+ * que comience con el carácter '#', dejando solo el contenido relevante.
+ * 
+ * @param linea Referencia a la línea de texto de la cual se eliminarán los comentarios.
+ */
 void ComprobarFormatoAPv::eliminarComentarios(std::string& linea) const {
   const std::size_t kPosComentario = linea.find('#');
   if (kPosComentario != std::string::npos) linea = linea.substr(0, kPosComentario);
 }
 
+/**
+ * @brief Comprueba si una línea está compuesta únicamente por espacios.
+ * 
+ * @param kLinea Línea a evaluar.
+ * @return true Si la línea está vacía o contiene solo espacios.
+ * @return false Si la línea contiene algún carácter no blanco.
+ */
 bool ComprobarFormatoAPv::lineaCompletaDeEspacios(const std::string& kLinea) const {
   return (std::all_of(kLinea.begin(), kLinea.end(), ::isspace)) ? true : false;
 }
 
+/**
+ * @brief Analiza y rellena el conjunto de estados del autómata.
+ * 
+ * Este método toma una línea que contiene el conjunto de estados y los
+ * añade al autómata.
+ * 
+ * @param kLinea Línea que contiene la información del conjunto de estados.
+ */
 void ComprobarFormatoAPv::analizarYRellenarConjuntoDeEstados(const std::string& kLinea) {
   std::istringstream stream(kLinea);
   std::string estado;
   while (stream >> estado) automataDePila_->setEstados().insert(new Estado(estado));
 }
 
+/**
+ * @brief Analiza y rellena el alfabeto del autómata.
+ * 
+ * Este método toma una línea que contiene el alfabeto y valida que todos
+ * los símbolos sean caracteres válidos. Lanza excepciones si encuentra
+ * símbolos prohibidos.
+ * 
+ * @param kLinea Línea que contiene la información del alfabeto.
+ * @throws std::string Si algún símbolo no es un carácter o es un símbolo prohibido.
+ */
 void ComprobarFormatoAPv::analizarYRellenarAlfabeto(const std::string& kLinea) {
   std::istringstream stream(kLinea);
   std::string elemento;
@@ -78,6 +146,16 @@ void ComprobarFormatoAPv::analizarYRellenarAlfabeto(const std::string& kLinea) {
   }
 }
 
+/**
+ * @brief Analiza y rellena el alfabeto de la pila del autómata.
+ * 
+ * Este método toma una línea que contiene el alfabeto de la pila y valida que
+ * todos los símbolos sean caracteres válidos, lanzando excepciones si encuentra
+ * símbolos prohibidos.
+ * 
+ * @param kLinea Línea que contiene la información del alfabeto de pila.
+ * @throws std::string Si algún símbolo no es un carácter o es un símbolo prohibido.
+ */
 void ComprobarFormatoAPv::analizarYRellenarAlfabetoPila(const std::string& kLinea) {
   std::istringstream stream(kLinea);
   std::string elemento;
@@ -92,6 +170,16 @@ void ComprobarFormatoAPv::analizarYRellenarAlfabetoPila(const std::string& kLine
   }
 }
 
+/**
+ * @brief Analiza y rellena el estado inicial del autómata.
+ * 
+ * Este método toma una línea que contiene el estado inicial y verifica que
+ * exista en el conjunto de estados, lanzando excepciones si no se encuentra
+ * o si se proporciona más de un estado inicial.
+ * 
+ * @param kLinea Línea que contiene la información del estado inicial.
+ * @throws std::string Si el estado inicial no existe o si hay más de uno.
+ */
 void ComprobarFormatoAPv::analizarYRellenarEstadoInicial(const std::string& kLinea) {
   std::istringstream stream(kLinea);
   std::string elemento;
@@ -115,7 +203,16 @@ void ComprobarFormatoAPv::analizarYRellenarEstadoInicial(const std::string& kLin
   automataDePila_->setEstadoInicial() = estadoInicialPtr;
 }
 
-
+/**
+ * @brief Analiza y rellena el símbolo inicial de la pila del autómata.
+ * 
+ * Este método toma una línea que contiene el símbolo inicial de la pila y
+ * verifica que exista en el alfabeto de la pila, lanzando excepciones si no se
+ * encuentra o si se proporciona más de uno.
+ * 
+ * @param kLinea Línea que contiene la información del símbolo inicial de la pila.
+ * @throws std::string Si el símbolo inicial no existe o si hay más de uno.
+ */
 void ComprobarFormatoAPv::analizarYRellenarSimboloInicialPila(const std::string& kLinea) {
   std::istringstream stream(kLinea);
   std::string elemento;
@@ -135,6 +232,15 @@ void ComprobarFormatoAPv::analizarYRellenarSimboloInicialPila(const std::string&
   automataDePila_->setSimboloInicialPila() = simbolo;
 }
 
+/**
+ * @brief Analiza y rellena las transiciones del autómata.
+ * 
+ * Este método toma una línea que describe una transición y valida que cada
+ * elemento de la transición sea correcto, lanzando excepciones si hay errores.
+ * 
+ * @param kLinea Línea que contiene la información de la transición.
+ * @throws std::string Si hay transiciones repetidas o elementos inválidos.
+ */
 void ComprobarFormatoAPv::analizarYRellenarTransiciones(const std::string& kLinea) {
   const std::string kErrorExiste = "No pueden existir transiciones repetidas.",
                     kErrorCantidadElementos = "Una transición sólo puede estar formada por 5 elementos.",
@@ -203,6 +309,16 @@ void ComprobarFormatoAPv::analizarYRellenarTransiciones(const std::string& kLine
   estadoOrigen->agregarTransicion(nuevaTransicion);
 }
 
+/**
+ * @brief Verifica si una transición ya existe en el autómata.
+ * 
+ * Este método compara la línea de transición dada con las transiciones ya
+ * existentes en el autómata para evitar duplicados.
+ * 
+ * @param kLinea Línea que describe la transición a verificar.
+ * @return true Si la transición ya existe.
+ * @return false Si la transición no existe.
+ */
 bool ComprobarFormatoAPv::existeTransicion(const std::string& kLinea) const {
   std::string elemento;
   const int kLimiteElementosTransicion = 5;
