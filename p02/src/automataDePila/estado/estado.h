@@ -1,6 +1,9 @@
 #pragma once
 
+#include <vector>
 #include <string>
+
+class Transicion;
 
 class Estado {
  public:
@@ -9,7 +12,9 @@ class Estado {
     id_ = kId;
     estadoFinal_ = kEstadoFinal;
   }
+  void agregarTransicion(const Transicion& kTransicion) { transiciones_.push_back(kTransicion); }
   const std::string getId() const {return id_; }
+  const std::vector<Transicion> getTransiciones() const { return transiciones_; }
   std::string& setId() {return id_; }
   bool operator<(const Estado& kOtro) const { return id_ < kOtro.id_; }
   bool operator==(const Estado& kOtro) const { return id_ == kOtro.id_; }
@@ -21,4 +26,5 @@ class Estado {
  private:
   std::string id_;
   bool estadoFinal_; 
+  std::vector<Transicion> transiciones_;
 };

@@ -61,7 +61,7 @@ bool ComprobarFormatoAPv::lineaCompletaDeEspacios(const std::string& kLinea) con
 void ComprobarFormatoAPv::analizarYRellenarConjuntoDeEstados(const std::string& kLinea) {
   std::istringstream stream(kLinea);
   std::string estado;
-  while (stream >> estado) automataDePila_->setEstados().insert(Estado(estado));
+  while (stream >> estado) automataDePila_->setEstados().insert(new Estado(estado));
 }
 
 void ComprobarFormatoAPv::analizarYRellenarAlfabeto(const std::string& kLinea) {
@@ -86,7 +86,7 @@ void ComprobarFormatoAPv::analizarYRellenarAlfabetoPila(const std::string& kLine
   char simbolo;
   while (stream >> elemento) {
     if (elemento.size() != 1) throw (kErrorNoChar);
-    else if (elemento[0] == '.' /* (elemento[0] >= 'a' && elemento[0] <= 'z') */) throw (kErrorSimbProhibido);
+    else if (elemento[0] == '.') throw (kErrorSimbProhibido);
     simbolo = elemento[0];
     automataDePila_->setAlfabetoPila().insertar(simbolo);
   }
@@ -99,17 +99,22 @@ void ComprobarFormatoAPv::analizarYRellenarEstadoInicial(const std::string& kLin
                     kErrorNoHaySoloUno = "Tiene que existir solo un Estado Inicial.";
   std::string estado;
   stream >> estado;
+  // Verifica que no haya más de un estado inicial.
   if (stream >> estado) throw (kErrorNoHaySoloUno);
-  bool estadoExiste = false;
+  // Buscar el puntero del estado correspondiente en el conjunto de estados.
+  Estado* estadoInicialPtr = nullptr;
   for (const auto& a : automataDePila_->getEstados()) {
-    if (a.getId() == estado) {
-      estadoExiste = true;
+    if (a->getId() == estado) {
+      estadoInicialPtr = a;
       break;
     }
   }
-  if (!estadoExiste) throw (kErrorNoExiste);
-  automataDePila_->setEstadoInicial() = Estado(estado);
+  // Si no se encuentra el estado, lanzar una excepción.
+  if (estadoInicialPtr == nullptr) throw (kErrorNoExiste);
+  // Asignar el puntero al estado inicial.
+  automataDePila_->setEstadoInicial() = estadoInicialPtr;
 }
+
 
 void ComprobarFormatoAPv::analizarYRellenarSimboloInicialPila(const std::string& kLinea) {
   std::istringstream stream(kLinea);
@@ -139,39 +144,49 @@ void ComprobarFormatoAPv::analizarYRellenarTransiciones(const std::string& kLine
                     kErrorSímboloAlfabetoSize1 = "Algún símbolo del alfabeto tiene size > 1.",
                     kErrorSímboloAlfabetoPilaSize1 = "Algún símbolo del alfabeto de la pila tiene size > 1.",
                     kErrorSimboloInsertarEnPila = "Algún símbolo a introducir en la pila desconocido.";
-  if (existeTransicion(kLinea)) throw (kErrorExiste);
+
+  if (existeTransicion(kLinea)) throw kErrorExiste;
   std::istringstream stream(kLinea);
   const int kLimiteElemTransicion = 5;
   int contador = 0;
-  const std::set<Estado>& kEstados = automataDePila_->getEstados();
+  const std::set<Estado*>& kEstados = automataDePila_->getEstados();
   const std::set<char>& kConjuntoAlfabeto = automataDePila_->getAlfabeto().getConjuntoAlfabeto();
   const std::set<char>& kConjuntoAlfabetoPila = automataDePila_->getAlfabetoPila().getConjuntoAlfabeto();
-  Estado estadoOrigen, estadoDestino;
+  Estado* estadoOrigen = nullptr;
+  Estado* estadoDestino = nullptr;
   char simboloTransicion, elementoAExtraerDePila;
   std::string elemento, simbolosAIntroducirEnPila;
   while (stream >> elemento) {
     switch (contador) {
-      case 0:
-        if (kEstados.find(Estado(elemento)) == kEstados.end()) throw (kErrorEstado);
-        else estadoOrigen.setId() = elemento;
+      case 0: {
+        auto it = std::find_if(kEstados.begin(), kEstados.end(), [&elemento](Estado* estado) { return estado->getId() == elemento; });
+        if (it == kEstados.end()) throw kErrorEstado;
+        estadoOrigen = *it;  // Obtener el puntero al estado encontrado
         break;
+      }
       case 1:
-        if (elemento.size() != 1) throw (kErrorSímboloAlfabetoSize1);
-        else if (kConjuntoAlfabeto.find(elemento[0]) == kConjuntoAlfabeto.end()) throw (kErrorSimboloAlfabeto);
-        else simboloTransicion = elemento[0];
+        // Validar símbolo de transición
+        if (elemento.size() != 1) throw kErrorSímboloAlfabetoSize1;
+        if (kConjuntoAlfabeto.find(elemento[0]) == kConjuntoAlfabeto.end()) throw kErrorSimboloAlfabeto;
+        simboloTransicion = elemento[0];
         break;
       case 2:
-        if (elemento.size() != 1) throw (kErrorSímboloAlfabetoPilaSize1);
-        else if (kConjuntoAlfabetoPila.find(elemento[0]) == kConjuntoAlfabetoPila.end()) throw (kErrorSimboloAlfabetoPila);      
-        else elementoAExtraerDePila = elemento[0];
+        // Validar símbolo a extraer de la pila
+        if (elemento.size() != 1) throw kErrorSímboloAlfabetoPilaSize1;
+        if (kConjuntoAlfabetoPila.find(elemento[0]) == kConjuntoAlfabetoPila.end()) throw kErrorSimboloAlfabetoPila;
+        elementoAExtraerDePila = elemento[0];
         break;
-      case 3:
-        if (kEstados.find(Estado(elemento)) == kEstados.end()) throw (kErrorEstado);
-        else estadoDestino.setId() = elemento;
-        break;        
+      case 3: {
+        // Buscar estado destino en el conjunto de punteros
+        auto it = std::find_if(kEstados.begin(), kEstados.end(), [&elemento](Estado* estado) { return estado->getId() == elemento; });
+        if (it == kEstados.end()) throw kErrorEstado;
+        estadoDestino = *it;  // Obtener el puntero al estado encontrado
+        break;
+      }
       case 4:
-        for (int i = 0; i < elemento.size(); ++i) {
-          if (kConjuntoAlfabetoPila.find(elemento[i]) == kConjuntoAlfabetoPila.end()) throw (kErrorSimboloInsertarEnPila);
+        // Validar símbolos a insertar en la pila
+        for (char simbolo : elemento) {
+          if (kConjuntoAlfabetoPila.find(simbolo) == kConjuntoAlfabetoPila.end()) throw kErrorSimboloInsertarEnPila;
         }
         simbolosAIntroducirEnPila = elemento;
         break;
@@ -180,51 +195,58 @@ void ComprobarFormatoAPv::analizarYRellenarTransiciones(const std::string& kLine
     }
     contador++;
   }
-  if (contador != kLimiteElemTransicion) throw (kErrorCantidadElementos);
-  automataDePila_->setTransiciones().push_back(
-    Transicion(estadoOrigen, simboloTransicion, elementoAExtraerDePila, estadoDestino, simbolosAIntroducirEnPila)
-  );
+  // Verificar si se ingresaron exactamente 5 elementos
+  if (contador != kLimiteElemTransicion) throw kErrorCantidadElementos;
+  // Agregar la nueva transición al autómata
+  Transicion nuevaTransicion(estadoOrigen, simboloTransicion, elementoAExtraerDePila, estadoDestino, simbolosAIntroducirEnPila);
+  // Añadir la transición al estado de origen
+  estadoOrigen->agregarTransicion(nuevaTransicion);
 }
 
 bool ComprobarFormatoAPv::existeTransicion(const std::string& kLinea) const {
-  std::istringstream stream(kLinea);
   std::string elemento;
   const int kLimiteElementosTransicion = 5;
   int contadorElemento;
   bool existeTransicion;
-  for (int i = automataDePila_->getTransiciones().size() - 1; i >= 0; --i) {
-    existeTransicion = true;
-    contadorElemento = 0;
-    while (stream >> elemento) {
-      switch (contadorElemento) {
-        case 0: // Comparando estado origen
-          if (elemento != automataDePila_->getTransiciones()[i].getEstadoOrigen().getId()) existeTransicion = false;
-          break;
-        case 1: // Comparando símbolo transición
-          if (
-            elemento.size() != 1 ||
-            elemento[0] != automataDePila_->getTransiciones()[i].getSimboloTransicion()
-          ) existeTransicion = false;
-          break;
-        case 2: // Comparando símbolo a extraer de la pila
-          if (
-            elemento.size() != 1 ||
-            elemento[0] != automataDePila_->getTransiciones()[i].getElementoAExtraerDePila()
-          ) existeTransicion = false;          
-          break;
-        case 3: // Comparando estado destino
-          if (elemento != automataDePila_->getTransiciones()[i].getEstadoDestino().getId()) existeTransicion = false;
-          break;
-        case 4: // Comparando símbolos a introducir en la pila
-          if (elemento != automataDePila_->getTransiciones()[i].getSimbolosAIntroducirEnPila()) existeTransicion = false;
-          break;
-        default: // Te pasas del límite seguro que no existe
-          existeTransicion = false;
-          break;
+  for (const Estado* estado : automataDePila_->getEstados()) {
+    for (int i = 0; i < estado->getTransiciones().size(); ++i) {
+      existeTransicion = true;
+      contadorElemento = 0;
+      // Reinicia el flujo de entrada para cada transición
+      std::istringstream stream(kLinea);    
+      while (stream >> elemento) {
+        switch (contadorElemento) {
+          case 0: // Comparando estado origen
+            if (elemento != estado->getId()) existeTransicion = false;
+            break;
+          case 1: // Comparando símbolo transición
+            if (
+              elemento.size() != 1 ||
+              elemento[0] != estado->getTransiciones()[i].getSimboloTransicion()
+            ) existeTransicion = false;
+            break;
+          case 2: // Comparando símbolo a extraer de la pila
+            if (
+              elemento.size() != 1 ||
+              elemento[0] != estado->getTransiciones()[i].getElementoAExtraerDePila()
+            ) existeTransicion = false;          
+            break;
+          case 3: // Comparando estado destino
+            if (estado->getTransiciones()[i].getEstadoDestino() != nullptr && 
+              elemento != estado->getTransiciones()[i].getEstadoDestino()->getId()
+            ) existeTransicion = false;
+            break;
+          case 4: // Comparando símbolos a introducir en la pila
+            if (elemento != estado->getTransiciones()[i].getSimbolosAIntroducirEnPila()) existeTransicion = false;
+            break;
+          default: // Te pasas del límite seguro que no existe
+            existeTransicion = false;
+            break;
+        }
+        contadorElemento++;
       }
-      contadorElemento++;
+      if (existeTransicion && contadorElemento == kLimiteElementosTransicion) return true;
     }
-    if (existeTransicion && contadorElemento == kLimiteElementosTransicion) return true;
   }
   return false;
 }
