@@ -39,6 +39,7 @@ bool APv::seAceptaCadena(const std::string& kCadena) {
   // Inicializar la pila y agregar el símbolo inicial
   pila_ = std::stack<char>();
   pila_.push(simboloInicialPila_);
+  mostrarTraza(estadoInicial_, kCadena, pila_, Transicion());
   // Definir la función recursiva explorar
   std::function<bool(size_t, const Estado*, std::stack<char>)> explorar = [&](size_t indiceCadena, const Estado* estadoActual, std::stack<char> pila) {
     // Saltar los caracteres '.' en la cadena
@@ -73,6 +74,7 @@ bool APv::seAceptaCadena(const std::string& kCadena) {
         }
         // Llamar recursivamente a explorar con el nuevo estado y pila
         if (explorar(indiceCadena + (kTransicion.getSimboloTransicion() != '.'), kTransicion.getEstadoDestino(), pilaTemp)) return true;
+        mostrarTraza(estadoActual, kCadena.substr(indiceCadena, kCadena.size()), pila, kTransicion); // Mostrar la traza en caso de fallo
         pila.push(kTopPila); // Restaurar la pila original en caso de que la exploración no tenga éxito
       }
     }

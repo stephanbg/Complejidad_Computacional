@@ -3,10 +3,10 @@
 # Grado en Ingeniería Informática
 # Asignatura: Complejidad Computacional
 # Curso: 4º
-# Práctica 1: Implementación de Funciones Primitivas Recursivas
+# Práctica 2: Programar un simulador de un autómata con pila
 # Autor: Stephan Brommer Gutiérrez
 # Correo: alu0101493497@ull.es
-# Fecha: 3 de Octubre
+# Fecha: 14 de Octubre
 # Archivo GNUMakefile
 
 CXX = g++                                     # The C++ compiler command

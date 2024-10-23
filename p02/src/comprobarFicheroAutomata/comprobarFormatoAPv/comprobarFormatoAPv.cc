@@ -160,7 +160,7 @@ void ComprobarFormatoAPv::analizarYRellenarAlfabetoPila(const std::string& kLine
   std::istringstream stream(kLinea);
   std::string elemento;
   const std::string kErrorNoChar = "Algún símbolo del alfabeto de pila no es un char.",
-                    kErrorSimbProhibido = "Algún símbolo del alfabeto de pila es '.' o minúscula.";
+                    kErrorSimbProhibido = "Algún símbolo del alfabeto de pila es '.'.";
   char simbolo;
   while (stream >> elemento) {
     if (elemento.size() != 1) throw (kErrorNoChar);
@@ -223,7 +223,7 @@ void ComprobarFormatoAPv::analizarYRellenarSimboloInicialPila(const std::string&
   char simbolo = elemento[0];
   bool simboloExiste = false;
   for (const auto& a : automataDePila_->getAlfabetoPila().getConjuntoAlfabeto()) {
-    if (a == simbolo) {
+    if (a == simbolo && a != '.') {
       simboloExiste = true;
       break;
     }
@@ -247,6 +247,7 @@ void ComprobarFormatoAPv::analizarYRellenarTransiciones(const std::string& kLine
                     kErrorEstado = "Algún estado desconocido.",
                     kErrorSimboloAlfabeto = "Algún símbolo del alfabeto desconocido.",
                     kErrorSimboloAlfabetoPila = "Algún símbolo del alfabeto de la pila desconocido.",
+                    kErrorSímboloAlfabetoPilaVacio = "No se puede extraer vacío de la pila.",
                     kErrorSímboloAlfabetoSize1 = "Algún símbolo del alfabeto tiene size > 1.",
                     kErrorSímboloAlfabetoPilaSize1 = "Algún símbolo del alfabeto de la pila tiene size > 1.",
                     kErrorSimboloInsertarEnPila = "Algún símbolo a introducir en la pila desconocido.";
@@ -279,6 +280,7 @@ void ComprobarFormatoAPv::analizarYRellenarTransiciones(const std::string& kLine
       case 2:
         // Validar símbolo a extraer de la pila
         if (elemento.size() != 1) throw kErrorSímboloAlfabetoPilaSize1;
+        if (elemento[0] == '.') throw kErrorSímboloAlfabetoPilaVacio;
         if (kConjuntoAlfabetoPila.find(elemento[0]) == kConjuntoAlfabetoPila.end()) throw kErrorSimboloAlfabetoPila;
         elementoAExtraerDePila = elemento[0];
         break;
