@@ -136,11 +136,11 @@ void ComprobarFormatoAPv::analizarYRellenarAlfabeto(const std::string& kLinea) {
   std::istringstream stream(kLinea);
   std::string elemento;
   const std::string kErrorNoChar = "Algún símbolo del alfabeto no es un char.",
-                    kErrorSimbProhibido = "Algún símbolo del alfabeto es '.' o mayúscula.";
+                    kErrorSimbProhibido = "Algún símbolo del alfabeto es '.'.";
   char simbolo;
   while (stream >> elemento) {
     if (elemento.size() != 1) throw (kErrorNoChar);
-    else if (elemento[0] == '.' || (elemento[0] >= 'A' && elemento[0] <= 'Z')) throw (kErrorSimbProhibido);
+    else if (elemento[0] == '.') throw (kErrorSimbProhibido);
     simbolo = elemento[0];
     automataDePila_->setAlfabeto().insertar(simbolo);
   }
