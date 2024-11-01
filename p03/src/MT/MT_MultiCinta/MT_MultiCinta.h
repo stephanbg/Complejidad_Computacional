@@ -4,18 +4,14 @@
 
 #include "../MT.h"
 #include "../componentes_MT/transicion/direccion.h"
+#include "../componentes_MT/transicion/transicionMultiCinta/transicionMultiCinta.h"
 
 class MaquinaTuringMultiCinta : public MaquinaTuring {
  public:
-  MaquinaTuringMultiCinta(const int kNumCintas) : cinta_(kNumCintas) {}
+  MaquinaTuringMultiCinta(const int);
   virtual bool procesar(const std::string&) override;
-  virtual void mostrar() const override;
-  virtual void imprimirCinta() const override;
+  virtual void mostrarMT() const override;
+  virtual void mostrarCinta() const override;
  private:
-  std::vector<std::vector<char>> cinta_;
-  void escribir(const char);
-  char leer() const;
- protected:
-  virtual void inicializarCinta(const std::string&) override;
-  virtual void moverCabezal(const Direccion&) override;
+  std::vector<Cinta> cintas_;
 };

@@ -28,18 +28,15 @@ int main(int argc, char* argv[]) {
     ComprobarParametros::comprobarErrores(argc, argv);
     ComprobarFicheroMT* comprobarMT = ComprobarFicheroMT::crearComprobador(argv[1]);
     MaquinaTuring* maquinaTuring = comprobarMT->setMaquinaTuring();
-    maquinaTuring->mostrar();
+    maquinaTuring->mostrarMT();
     std::cout << std::endl;
     bool esAceptada;
     std::string cadena;
     for (int i = 2; i < argc; ++i) {
       cadena = argv[i];
       esAceptada = maquinaTuring->procesar(cadena);
-      std::cout << cadena << ": ";
-      if (esAceptada) std::cout << "ACEPTADA";
-      else std::cout << "RECHAZADA";
-      std::cout << std::endl;
-      maquinaTuring->imprimirCinta();
+      std::cout << cadena << ": " << (esAceptada ? "ACEPTADA" : "RECHAZADA") << std::endl;
+      maquinaTuring->mostrarCinta();
       std::cout << std::endl;
     }
   } catch (const std::string& mensaje) {

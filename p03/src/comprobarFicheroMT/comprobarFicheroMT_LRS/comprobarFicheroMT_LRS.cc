@@ -13,6 +13,7 @@
 
 #include "./comprobarFicheroMT_LRS.h"
 
+
 ComprobarFicheroMT_LRS::ComprobarFicheroMT_LRS(const std::string& kNombreFichero) {
   maquinaTuring_ = new MaquinaTuringLRS;
   analizarFicheroMT(kNombreFichero);

@@ -4,20 +4,7 @@ void MaquinaTuring::agregarTransicion(const Estado& kEstadoIni, Transicion*& tra
   transiciones_[kEstadoIni].push_back(transicion);
 }
 
-void MaquinaTuring::moverCabezal(const Direccion& kDireccion) {
-  switch (kDireccion.getValor()) {
-    case Direccion::IZQUIERDA:
-      posicionCabezal_--;
-      break;
-    case Direccion::DERECHA:
-      posicionCabezal_++;
-      break;
-    case Direccion::QUIETO:
-      break;
-  }
-}
-
-void MaquinaTuring::mostrar() const {
+void MaquinaTuring::mostrarMT() const {
   std::cout << "----------------------------------------" << std::endl;
   std::cout << "Estados: {";
   bool primero = true;
@@ -31,6 +18,7 @@ void MaquinaTuring::mostrar() const {
   std::cout << "Alfabeto de Cinta: " << alfabetoCinta_;
   std::cout << "Estado Inicial: " << estadoInicial_ << std::endl;
   std::cout << "Símbolo Blanco: " << simboloBlanco_ << std::endl;
+  std::cout << "Número de Cintas: " << numCintas_ << std::endl;
   std::cout << "Estados Finales: {";
   primero = true;
   for (const Estado& kEstado : estadosFinales_) {

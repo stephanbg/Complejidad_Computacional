@@ -3,6 +3,7 @@
 #include "./comprobarFicheroMT_MultiCinta/comprobarFicheroMT_MultiCinta.h"  // Agregar esta línea
 
 // Inicializa el mapa con criterios más flexibles
+
 std::unordered_map<std::string, std::function<ComprobarFicheroMT*(const std::string&, const int)>>
 ComprobarFicheroMT::tipoMaquina_ = {
   {"LRS", [](const std::string& nombreFichero, const int) {
@@ -96,7 +97,6 @@ void ComprobarFicheroMT::eliminarComentarios(std::string& linea) {
   if (kPosComentario != std::string::npos) linea = linea.substr(0, kPosComentario);
 }
 
-
 bool ComprobarFicheroMT::lineaCompletaDeEspacios(const std::string& kLinea) {
   return (std::all_of(kLinea.begin(), kLinea.end(), ::isspace)) ? true : false;
 }
@@ -106,6 +106,7 @@ void ComprobarFicheroMT::analizarYRellenarConjuntoDeEstados(const std::string& k
   std::string estado;
   while (stream >> estado) maquinaTuring_->setEstados().insert(Estado(estado));
 }
+
 void ComprobarFicheroMT::analizarYRellenarAlfabetoEntrada(const std::string& kLinea) {
   std::istringstream stream(kLinea);
   std::string elemento;

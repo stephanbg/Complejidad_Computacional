@@ -7,16 +7,11 @@
 #include "../componentes_MT/transicion/transicionCintaUnicaLRS/transicionCintaUnicaLRS.h"
 
 class MaquinaTuringLRS : public MaquinaTuring {
- public:
-  MaquinaTuringLRS() : cinta_{} {}
+ public: 
+  MaquinaTuringLRS() {}
   virtual bool procesar(const std::string&) override;
-  virtual void mostrar() const override;
-  virtual void imprimirCinta() const override;
+  virtual void mostrarMT() const override;
+  virtual void mostrarCinta() const override;
  private:
-  std::vector<char> cinta_;
-  void escribir(const char);
-  char leer() const;
- protected:
-  virtual void inicializarCinta(const std::string&) override;
-  virtual void moverCabezal(const Direccion&) override;
+  Cinta cinta_;
 };
