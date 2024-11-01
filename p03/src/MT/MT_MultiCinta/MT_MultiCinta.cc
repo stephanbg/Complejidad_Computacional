@@ -1,12 +1,7 @@
 #include "./MT_MultiCinta.h"
 
-bool MaquinaTuringMultiCinta::procesar(const std::string& kCadena) const {
+bool MaquinaTuringMultiCinta::procesar(const std::string& kCadena) {
 
-}
-
-void MaquinaTuringMultiCinta::mostrar() const {
-  std::cout << "Máquina de Turing MultiCinta" << std::endl;
-  MaquinaTuring::mostrar();
 }
 
 void MaquinaTuringMultiCinta::escribir(const char kSimbolo) { /// No estoy seguro si crece o algo
@@ -18,4 +13,21 @@ void MaquinaTuringMultiCinta::escribir(const char kSimbolo) { /// No estoy segur
 char MaquinaTuringMultiCinta::leer() const {
   //if (posicionCabezal_ < 0 || posicionCabezal_ >= cinta_.size()) return simboloBlanco_;
   //return cinta_[posicionCabezal_];
+}
+
+void MaquinaTuringMultiCinta::inicializarCinta(const std::string& kCadena) {
+
+}
+
+void MaquinaTuringMultiCinta::moverCabezal(const Direccion& kDir) {
+  MaquinaTuring::moverCabezal(kDir);
+}
+
+void MaquinaTuringMultiCinta::mostrar() const {
+  std::cout << "Máquina de Turing MultiCinta" << std::endl;
+  MaquinaTuring::mostrar();
+}
+
+void MaquinaTuringMultiCinta::imprimirCinta() const {
+
 }

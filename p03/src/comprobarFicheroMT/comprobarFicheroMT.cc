@@ -123,13 +123,17 @@ void ComprobarFicheroMT::analizarYRellenarAlfabetoEntrada(const std::string& kLi
 void ComprobarFicheroMT::analizarYRellenarAlfabetoCinta(const std::string& kLinea) {
   std::istringstream stream(kLinea);
   std::string elemento;
-  const std::string kErrorNoChar = "Algún símbolo del alfabeto de cinta no es un char.";
+  const std::string kErrorNoChar = "Algún símbolo del alfabeto de cinta no es un char.",
+                    kErrorNoBlanco = "Tiene que existir el blanco en el alfabeto cinta.";
   char simbolo;
+  bool existeBlanco = false;
   while (stream >> elemento) {
     if (elemento.size() != 1) throw (kErrorNoChar);
     simbolo = elemento[0];
+    if (simbolo == '.') existeBlanco = true;
     maquinaTuring_->setAlfabetoCinta().insertar(simbolo);
   }
+  if (!existeBlanco) throw (kErrorNoBlanco);
 }
 
 void ComprobarFicheroMT::analizarYRellenarEstadoInicial(const std::string& kLinea) {

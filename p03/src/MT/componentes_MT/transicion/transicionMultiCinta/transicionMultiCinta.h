@@ -15,10 +15,9 @@ class TransicionMultiCinta : public Transicion {
     simbolosLeidos_(kSimbolosLeidos), 
     simbolosEscritos_(kSimbolosEscritos), 
     movimientos_(kMovimientos) {}
-
-  const std::vector<char>& getSimbolosLeidos() const { return simbolosLeidos_; }
-  const std::vector<char>& getSimbolosEscritos() const { return simbolosEscritos_; }
-  const std::vector<Direccion>& getMovimientos() const { return movimientos_; }
+  const std::vector<char>& getSimbolosALeer() const { return simbolosLeidos_; }
+  const std::vector<char>& getSimbolosAEscribir() const { return simbolosEscritos_; }
+  const std::vector<Direccion>& getMovimientosARealizar() const { return movimientos_; }
   virtual void mostrar() const override;
  private:
   std::vector<char> simbolosLeidos_;

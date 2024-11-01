@@ -61,12 +61,11 @@ void ComprobarFicheroMT_LRS::analizarYRellenarTransiciones(const std::string& kL
   }
   // Comprobar si el símbolo escrito es válido
   if (simboloEscritoStr.size() != 1) {
-    const std::string kErrorSizeSimboloEscrito = "Símbolo escrito (" + simboloEscritoStr + ")tamaño != 1";
+    const std::string kErrorSizeSimboloEscrito = "Símbolo escrito (" + simboloEscritoStr + ") tamaño != 1";
     throw (kErrorSizeSimboloEscrito);
   } else if (
-    (maquinaTuring_->getAlfabetoEntrada().getConjuntoAlfabeto().find(simboloEscritoStr[0]) == 
-    maquinaTuring_->getAlfabetoEntrada().getConjuntoAlfabeto().end()) &&
-    simboloEscritoStr[0] != maquinaTuring_->getSimboloBlanco()
+    maquinaTuring_->getAlfabetoCinta().getConjuntoAlfabeto().find(simboloEscritoStr[0]) == 
+    maquinaTuring_->getAlfabetoCinta().getConjuntoAlfabeto().end()
   ) {
     const std::string kErrorSimboloEscrito = "Símbolo escrito (" + simboloEscritoStr + ") no está en el alfabeto de entrada.";
     throw (kErrorSimboloEscrito);
@@ -89,10 +88,10 @@ void ComprobarFicheroMT_LRS::analizarYRellenarTransiciones(const std::string& kL
       TransicionCintaUnicaLRS* transicionLRS = dynamic_cast<TransicionCintaUnicaLRS*>(kTransicion);
       if (transicionLRS != nullptr && // Comprobar que el cast fue exitoso
         transicionLRS->getEstadoIni() == estadoActual &&
-        transicionLRS->getSimboloLeido() == simboloLeidoStr[0] &&
+        transicionLRS->getSimboloALeer() == simboloLeidoStr[0] &&
         transicionLRS->getEstadoFin() == estadoDestino &&
-        transicionLRS->getSimboloEscrito() == simboloEscritoStr[0] &&
-        transicionLRS->getMovimiento() == movimiento) {
+        transicionLRS->getSimboloAEscribir() == simboloEscritoStr[0] &&
+        transicionLRS->getMovimientoARealizar() == movimiento) {
         delete nuevaTransicion; // Liberar memoria en caso de error
         const std::string kErrorDuplicado = "Transición duplicada";
         throw (kErrorDuplicado);

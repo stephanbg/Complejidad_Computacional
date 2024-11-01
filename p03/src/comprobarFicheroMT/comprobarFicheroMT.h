@@ -26,7 +26,7 @@ class ComprobarFicheroMT_MultiCinta;
 class ComprobarFicheroMT {
  public:
   static ComprobarFicheroMT* crearComprobador(const std::string& kNombreFichero);
-  const MaquinaTuring* getMaquinaTuring() const { return maquinaTuring_; }
+  MaquinaTuring*& setMaquinaTuring() { return maquinaTuring_; }
  protected:
   MaquinaTuring* maquinaTuring_;
   std::string mensajeError_ = "";

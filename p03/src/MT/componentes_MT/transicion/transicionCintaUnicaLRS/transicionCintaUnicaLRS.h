@@ -10,9 +10,9 @@ class TransicionCintaUnicaLRS : public Transicion {
     const Estado& kEstadoFin, const char kSimboloEscrito, const Direccion& kMovimiento)
       : Transicion(kEstadoIni, kEstadoFin),
         simboloLeido_(kSimboloLeido), simboloEscrito_(kSimboloEscrito), movimiento_(kMovimiento) {}
-  const char getSimboloLeido() const { return simboloLeido_; }
-  const char getSimboloEscrito() const { return simboloEscrito_; }
-  const Direccion getMovimiento() const { return movimiento_; }
+  const char getSimboloALeer() const { return simboloLeido_; }
+  const char getSimboloAEscribir() const { return simboloEscrito_; }
+  const Direccion getMovimientoARealizar() const { return movimiento_; }
   virtual void mostrar() const override;
  private:
   char simboloLeido_;

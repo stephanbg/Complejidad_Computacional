@@ -9,9 +9,10 @@
 
 class MaquinaTuring {
  public:
-  MaquinaTuring() : simboloBlanco_('.'), posicionCabezal_(0) {}
-  virtual bool procesar(const std::string&) const = 0;
+  MaquinaTuring() : simboloBlanco_('.'), posicionCabezal_(1) {} // Lo pongo en 1 porque voy a poner al inicio 'b'
+  virtual bool procesar(const std::string&) = 0;
   virtual void mostrar() const = 0;
+  virtual void imprimirCinta() const = 0;
   void agregarTransicion(const Estado&, Transicion*&);
   const char getSimboloBlanco() const { return simboloBlanco_; }
   const std::set<Estado>& getEstados() const { return estados_; }
@@ -25,6 +26,8 @@ class MaquinaTuring {
   Estado& setEstadoInicial() { return estadoInicial_; }
   virtual ~MaquinaTuring() {}
  protected:
+  virtual void inicializarCinta(const std::string&) = 0;
+  virtual void moverCabezal(const Direccion&) = 0; 
   std::set<Estado> estados_;
   Alfabeto alfabetoEntrada_;
   Alfabeto alfabetoCinta_;
@@ -33,5 +36,4 @@ class MaquinaTuring {
   char simboloBlanco_;
   std::unordered_map<Estado, std::vector<Transicion*>> transiciones_;
   int posicionCabezal_;
-  void moverCabezal(const Direccion&);
 };
