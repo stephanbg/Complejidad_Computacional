@@ -21,7 +21,7 @@
 
 class ComprobarFicheroMT_MultiCinta : public ComprobarFicheroMT {
  public:
-  ComprobarFicheroMT_MultiCinta(const std::string&);
+  ComprobarFicheroMT_MultiCinta(const std::string&, const int);
  protected:
   virtual void analizarFicheroMT(const std::string&) override;
   virtual void analizarYRellenarTransiciones(const std::string&) override;

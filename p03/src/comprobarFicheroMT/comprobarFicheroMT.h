@@ -41,5 +41,5 @@ class ComprobarFicheroMT {
   virtual void analizarYRellenarTransiciones(const std::string&) = 0;
   virtual void analizarFicheroMT(const std::string&) = 0;
  private:
-  static std::unordered_map<std::string, std::function<ComprobarFicheroMT*(const std::string&)>> tipoMaquina_;
+  static std::unordered_map<std::string, std::function<ComprobarFicheroMT*(const std::string&, const int)>> tipoMaquina_;
 };

@@ -5,7 +5,7 @@
 
 class Alfabeto {
  public:
-  const std::set<char> getConjuntoAlfabeto() const { return conjuntoAlfabeto_; }
+  const std::set<char>& getConjuntoAlfabeto() const { return conjuntoAlfabeto_; }
   void insertar(const char);
   friend std::ostream& operator<<(std::ostream&, const Alfabeto&);
  private:

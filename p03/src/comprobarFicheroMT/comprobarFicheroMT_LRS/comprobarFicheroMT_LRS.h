@@ -18,6 +18,7 @@
 
 #include "../comprobarFicheroMT.h"
 #include "../../MT/MT_LRS/MT_LRS.h"
+#include "../../MT/componentes_MT/transicion/transicionCintaUnicaLRS/transicionCintaUnicaLRS.h"
 
 class ComprobarFicheroMT_LRS : public ComprobarFicheroMT {
  public:

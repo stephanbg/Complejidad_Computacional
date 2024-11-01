@@ -13,16 +13,17 @@
 
 #include "./comprobarFicheroMT_MultiCinta.h"
 
-ComprobarFicheroMT_MultiCinta::ComprobarFicheroMT_MultiCinta(const std::string& kNombreFichero) {
-  maquinaTuring_ = new MaquinaTuringMultiCinta;
+ComprobarFicheroMT_MultiCinta::ComprobarFicheroMT_MultiCinta(
+  const std::string& kNombreFichero, const int kNumCintas
+) {
+  maquinaTuring_ = new MaquinaTuringMultiCinta(kNumCintas);
   analizarFicheroMT(kNombreFichero);
 }
 
 void ComprobarFicheroMT_MultiCinta::analizarFicheroMT(const std::string& kNombreFichero) {
   ComprobarFicheroMT::analizarFicheroMT(kNombreFichero);
-  analizarYRellenarTransiciones(kNombreFichero); 
 }
 
 void ComprobarFicheroMT_MultiCinta::analizarYRellenarTransiciones(const std::string& kLinea) {
-  std::cout << "analizarYRellenarTransiciones Multi" ;
+  //std::cout << "analizarYRellenarTransiciones Multi" ;
 }

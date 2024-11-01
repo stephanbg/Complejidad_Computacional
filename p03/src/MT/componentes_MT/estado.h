@@ -15,7 +15,6 @@ class Estado {
   const std::string& getId() const { return id_; }
   friend std::ostream& operator<<(std::ostream& os, const Estado& kEstado) {
     std::cout << kEstado.id_;
-    if (kEstado.estadoAceptacion_) os << " (EstadoFinal)";
     return os;
   }
  private:

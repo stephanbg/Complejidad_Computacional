@@ -8,8 +8,9 @@ class Transicion {
       : estadoIni_(estadoIni), estadoFin_(estadoFin) {}
   const Estado getEstadoIni() const { return estadoIni_; }
   const Estado getEstadoFin() const { return estadoFin_; }
+  virtual void mostrar() const = 0;
   virtual ~Transicion() {}
- private:
+ protected:
   Estado estadoIni_;
   Estado estadoFin_;
 };

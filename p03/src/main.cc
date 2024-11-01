@@ -27,8 +27,8 @@ int main(int argc, char* argv[]) {
   try {
     ComprobarParametros::comprobarErrores(argc, argv);
     ComprobarFicheroMT* comprobarMT = ComprobarFicheroMT::crearComprobador(argv[1]);
-    //const MaquinaTuring* maquinaTuringConst = comprobarMT->getMaquinaTuring();
-    //const MaquinaTuringBasica* kMaquinaTuringConst = dynamic_cast<const MaquinaTuringBasica*>(maquinaTuringConst);
+    const MaquinaTuring* maquinaTuring = comprobarMT->getMaquinaTuring();
+    maquinaTuring->mostrar();
   } catch (const std::string& mensaje) {
     std::cout << "Error: " << mensaje << std::endl << std::endl;
     ComprobarParametros::help();

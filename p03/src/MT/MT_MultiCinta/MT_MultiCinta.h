@@ -7,12 +7,11 @@
 
 class MaquinaTuringMultiCinta : public MaquinaTuring {
  public:
-  MaquinaTuringMultiCinta() : cinta_{}, posicionCabezal_(0) {}
+  MaquinaTuringMultiCinta(const int kNumCintas) : cinta_(kNumCintas) {}
   virtual bool procesar(const std::string&) const override;
+  virtual void mostrar() const override;
  private:
-  std::vector<char> cinta_;
-  int posicionCabezal_;
+  std::vector<std::vector<char>> cinta_;
   void escribir(const char);
   char leer() const;
-  void moverCabezal(const Direccion&);  
 };

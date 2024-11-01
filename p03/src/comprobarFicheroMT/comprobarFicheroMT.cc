@@ -3,10 +3,14 @@
 #include "./comprobarFicheroMT_MultiCinta/comprobarFicheroMT_MultiCinta.h"  // Agregar esta línea
 
 // Inicializa el mapa con criterios más flexibles
-std::unordered_map<std::string, std::function<ComprobarFicheroMT*(const std::string&)>>
+std::unordered_map<std::string, std::function<ComprobarFicheroMT*(const std::string&, const int)>>
 ComprobarFicheroMT::tipoMaquina_ = {
-  {"LRS", [](const std::string& nombreFichero) { return new ComprobarFicheroMT_LRS(nombreFichero); }},
-  {"Multicinta", [](const std::string& nombreFichero) { return new ComprobarFicheroMT_MultiCinta(nombreFichero); }}
+  {"LRS", [](const std::string& nombreFichero, const int) {
+    return new ComprobarFicheroMT_LRS(nombreFichero); }
+  },
+  {"Multicinta", [](const std::string& nombreFichero, const int kNumCintas) {
+    return new ComprobarFicheroMT_MultiCinta(nombreFichero, kNumCintas); }
+  }
   // Agrega más tipos de máquinas aquí
 };
 
@@ -23,8 +27,8 @@ ComprobarFicheroMT* ComprobarFicheroMT::crearComprobador(const std::string& kNom
       linea.erase(remove_if(linea.begin(), linea.end(), ::isspace), linea.end());
       std::istringstream iss(linea);
       iss >> numCintas;
-      if (iss.fail() || (numCintas < 2)) return tipoMaquina_["LRS"](kNombreFichero);
-      else return tipoMaquina_["Multicinta"](kNombreFichero);
+      if (iss.fail() || (numCintas < 2)) return tipoMaquina_["LRS"](kNombreFichero, 1);
+      else return tipoMaquina_["Multicinta"](kNombreFichero, numCintas);
     }
   }
   throw std::runtime_error("Fichero no contiene suficientes líneas válidas.");
@@ -67,9 +71,9 @@ void ComprobarFicheroMT::analizarFicheroMT(const std::string& kNombreFichero) {
         break;
       case 5: // Conjuntos de estados finales o número de cintas
           iss >> numCintas;
-          if (!(iss.fail() || numCintas <= 0)) { // Si no falla era número
+          if (!(iss.fail() || numCintas <= 0)) { // Saltarse Fila opcional
             std::getline(fichero, linea);
-            contador++; // Fila opcional
+            contador++;
           }
           analizarYRellenarConjuntoDeEstadosFinales(linea);
           break;
@@ -106,7 +110,7 @@ void ComprobarFicheroMT::analizarYRellenarAlfabetoEntrada(const std::string& kLi
   std::istringstream stream(kLinea);
   std::string elemento;
   const std::string kErrorNoChar = "Algún símbolo del alfabeto de entrada no es un char.",
-                    kErrorSimbProhibido = "Algún símbolo del alfabeto de entrada es 'b'.";
+                    kErrorSimbProhibido = "Algún símbolo del alfabeto de entrada es '.'.";
   char simbolo;
   while (stream >> elemento) {
     if (elemento.size() != 1) throw (kErrorNoChar);
