@@ -3,14 +3,15 @@
 void Cinta::iniciar(const std::string& kCadena) {
   posicionCabezal_ = 1;
   cinta_.clear();
-  cinta_.push_back('.');
+  cinta_.push_back(simboloBlanco_);
   for (char c : kCadena) cinta_.push_back(c);
-  cinta_.push_back('.');
+  cinta_.push_back(simboloBlanco_);
 }
 
-void Cinta::rellenarDeBlancos(const int kSizeFila) {
+void Cinta::rellenarDeBlancos() {
   posicionCabezal_ = 1;
-  cinta_.resize(kSizeFila, simboloBlanco_);
+  cinta_.clear();
+  cinta_.resize(3, simboloBlanco_);
 }
 
 void Cinta::escribir(const char kSimbolo) {

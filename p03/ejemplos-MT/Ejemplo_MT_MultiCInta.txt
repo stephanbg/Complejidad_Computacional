@@ -1,0 +1,29 @@
+# Máquina de Turing MultiCinta dice si la primera cinta tiene más 0 y 1 que la segunda
+# Tiene que especificar en los parámetros de entrada que dos '..' indican sinta vacía y un '.' indica cambio de cadena
+# Ejemplos:
+# 00110110.11010 sería cinta 1 = 00110110 cinta 2 = 11010
+# ..01 indica cinta 1 = vacía y cinta 2 = 01
+# 01.. indica cinta 1 = 01 y cinta 2 = vacía
+q0 q1 q2 q3
+0 1
+. 0 1
+q0
+.
+2
+q3
+# Transiciones
+q0 1 . q0 1 . R S
+q0 1 1 q0 1 1 R R
+q0 1 0 q0 1 0 R S
+q0 0 1 q0 0 1 S R
+q0 0 0 q0 0 0 R R
+q0 0 . q1 0 . S S
+q1 0 . q1 0 . R S
+q1 1 . q1 1 . R S
+q1 . . q2 . . L L
+q2 0 . q2 0 . L S
+q2 1 1 q2 1 1 L L
+q2 1 0 q2 1 0 S L
+q2 0 1 q2 0 1 L S
+q2 0 0 q2 0 0 L L
+q2 1 . q3 1 . S S

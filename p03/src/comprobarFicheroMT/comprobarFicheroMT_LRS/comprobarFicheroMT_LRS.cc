@@ -68,7 +68,7 @@ void ComprobarFicheroMT_LRS::analizarYRellenarTransiciones(const std::string& kL
     maquinaTuring_->getAlfabetoCinta().getConjuntoAlfabeto().find(simboloEscritoStr[0]) == 
     maquinaTuring_->getAlfabetoCinta().getConjuntoAlfabeto().end()
   ) {
-    const std::string kErrorSimboloEscrito = "Símbolo escrito (" + simboloEscritoStr + ") no está en el alfabeto de entrada.";
+    const std::string kErrorSimboloEscrito = "Símbolo escrito (" + simboloEscritoStr + ") no está en el alfabeto de la cinta.";
     throw (kErrorSimboloEscrito);
   }
   // Comprobar si es válido el movimiento
@@ -90,12 +90,10 @@ void ComprobarFicheroMT_LRS::analizarYRellenarTransiciones(const std::string& kL
       if (transicionLRS != nullptr && // Comprobar que el cast fue exitoso
         transicionLRS->getEstadoIni() == estadoActual &&
         transicionLRS->getSimboloALeer() == simboloLeidoStr[0] &&
-        transicionLRS->getEstadoFin() == estadoDestino &&
-        transicionLRS->getSimboloAEscribir() == simboloEscritoStr[0] &&
-        transicionLRS->getMovimientoARealizar() == movimiento) {
+        transicionLRS->getEstadoFin() == estadoDestino) {
         delete nuevaTransicion; // Liberar memoria en caso de error
-        const std::string kErrorDuplicado = "Transición duplicada";
-        throw (kErrorDuplicado);
+        const std::string kErrorNoDeterminista = "MT no determinista";
+        throw (kErrorNoDeterminista);
       }
     }
   }

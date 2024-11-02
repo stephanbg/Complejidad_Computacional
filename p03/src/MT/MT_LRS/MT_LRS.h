@@ -10,8 +10,9 @@ class MaquinaTuringLRS : public MaquinaTuring {
  public: 
   MaquinaTuringLRS() {}
   virtual bool procesar(const std::string&) override;
+  virtual void rellenarCintas(const std::string&) override {}
   virtual void mostrarMT() const override;
-  virtual void mostrarCinta() const override;
+  virtual void mostrarCintas() const override;
  private:
   Cinta cinta_;
 };

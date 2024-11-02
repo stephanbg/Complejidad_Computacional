@@ -30,7 +30,7 @@ void MaquinaTuringLRS::mostrarMT() const {
   MaquinaTuring::mostrarMT();
 }
 
-void MaquinaTuringLRS::mostrarCinta() const {
+void MaquinaTuringLRS::mostrarCintas() const {
   std::cout << "Cinta: ";
   cinta_.imprimir();
 }

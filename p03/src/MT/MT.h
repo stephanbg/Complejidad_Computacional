@@ -12,8 +12,9 @@ class MaquinaTuring {
  public:
   MaquinaTuring() : simboloBlanco_('.'), numCintas_(1) {}
   virtual bool procesar(const std::string&) = 0;
+  virtual void rellenarCintas(const std::string&) = 0;
   virtual void mostrarMT() const = 0;
-  virtual void mostrarCinta() const = 0;
+  virtual void mostrarCintas() const = 0;
   void agregarTransicion(const Estado&, Transicion*&);
   const char getSimboloBlanco() const { return simboloBlanco_; }
   const std::set<Estado>& getEstados() const { return estados_; }

@@ -73,8 +73,11 @@ void ComprobarFicheroMT::analizarFicheroMT(const std::string& kNombreFichero) {
       case 5: // Conjuntos de estados finales o número de cintas
           iss >> numCintas;
           if (!(iss.fail() || numCintas <= 0)) { // Saltarse Fila opcional
-            std::getline(fichero, linea);
             contador++;
+            while (std::getline(fichero, linea)) {
+              ComprobarFicheroMT::eliminarComentarios(linea);
+              if (!ComprobarFicheroMT::lineaCompletaDeEspacios(linea)) break;
+            }            
           }
           analizarYRellenarConjuntoDeEstadosFinales(linea);
           break;
@@ -125,6 +128,7 @@ void ComprobarFicheroMT::analizarYRellenarAlfabetoCinta(const std::string& kLine
   std::istringstream stream(kLinea);
   std::string elemento;
   const std::string kErrorNoChar = "Algún símbolo del alfabeto de cinta no es un char.",
+                    kErrorNoContieneAlfabetoDeEntrada = "Alfabeto de Entrada no contenido en el de cinta.",
                     kErrorNoBlanco = "Tiene que existir el blanco en el alfabeto cinta.";
   char simbolo;
   bool existeBlanco = false;
@@ -135,6 +139,14 @@ void ComprobarFicheroMT::analizarYRellenarAlfabetoCinta(const std::string& kLine
     maquinaTuring_->setAlfabetoCinta().insertar(simbolo);
   }
   if (!existeBlanco) throw (kErrorNoBlanco);
+  if (
+    !std::includes(
+      maquinaTuring_->getAlfabetoCinta().getConjuntoAlfabeto().begin(),
+      maquinaTuring_->getAlfabetoCinta().getConjuntoAlfabeto().end(),
+      maquinaTuring_->getAlfabetoEntrada().getConjuntoAlfabeto().begin(),
+      maquinaTuring_->getAlfabetoEntrada().getConjuntoAlfabeto().end()
+    )
+  ) throw(kErrorNoContieneAlfabetoDeEntrada);
 }
 
 void ComprobarFicheroMT::analizarYRellenarEstadoInicial(const std::string& kLinea) {

@@ -36,7 +36,7 @@ int main(int argc, char* argv[]) {
       cadena = argv[i];
       esAceptada = maquinaTuring->procesar(cadena);
       std::cout << cadena << ": " << (esAceptada ? "ACEPTADA" : "RECHAZADA") << std::endl;
-      maquinaTuring->mostrarCinta();
+      maquinaTuring->mostrarCintas();
       std::cout << std::endl;
     }
   } catch (const std::string& mensaje) {

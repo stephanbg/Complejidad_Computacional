@@ -81,7 +81,7 @@ void ComprobarFicheroMT_MultiCinta::analizarYRellenarTransiciones(const std::str
       maquinaTuring_->getAlfabetoCinta().getConjuntoAlfabeto().find(simbolosEscritosStr[i][0]) == 
       maquinaTuring_->getAlfabetoCinta().getConjuntoAlfabeto().end()
     ) {
-      const std::string kErrorSimboloEscrito = "Símbolo escrito (" + simbolosEscritosStr[i] + ") no está en el alfabeto de entrada.";
+      const std::string kErrorSimboloEscrito = "Símbolo escrito (" + simbolosEscritosStr[i] + ") no está en el alfabeto de la cinta.";
       throw (kErrorSimboloEscrito);
     }    
   }
@@ -123,12 +123,10 @@ void ComprobarFicheroMT_MultiCinta::analizarYRellenarTransiciones(const std::str
       if (transicionMulti != nullptr &&
         transicionMulti->getEstadoIni() == estadoActual &&
         transicionMulti->getSimbolosALeer() == simbolosLeidos &&
-        transicionMulti->getEstadoFin() == estadoDestino &&
-        transicionMulti->getSimbolosAEscribir() == simbolosEscritos &&
-        transicionMulti->getMovimientosARealizar() == movimientos) {
+        transicionMulti->getEstadoFin() == estadoDestino) {
         delete nuevaTransicion; // Liberar memoria en caso de error
-        const std::string kErrorDuplicado = "Transición duplicada";
-        throw (kErrorDuplicado);
+        const std::string kErrorNoDeterminista = "MT no determinista";
+        throw (kErrorNoDeterminista);
       }
     }
   }
