@@ -50,10 +50,10 @@ ComprobarFicheroMT* ComprobarFicheroMT::crearComprobador(const std::string& kNom
   }
   std::string linea;
   int contadorLineas = 0;
-  while (contadorLineas < 6 && std::getline(fichero, linea)) {
+  while (contadorLineas < 7 && std::getline(fichero, linea)) {
     ComprobarFicheroMT::eliminarComentarios(linea);
     if (ComprobarFicheroMT::lineaCompletaDeEspacios(linea)) continue;
-    if (++contadorLineas == 6) {
+    if (++contadorLineas == 7) {
       int numCintas;
       linea.erase(remove_if(linea.begin(), linea.end(), ::isspace), linea.end());
       std::istringstream iss(linea);
@@ -115,16 +115,19 @@ void ComprobarFicheroMT::analizarFicheroMT(const std::string& kNombreFichero) {
         analizarSimboloBlanco(linea);
         break;
       case 5: // Conjuntos de estados finales o número de cintas
-          iss >> numCintas;
-          if (!(iss.fail() || numCintas <= 0)) { // Saltarse Fila opcional
-            contador++;
-            while (std::getline(fichero, linea)) {
-              ComprobarFicheroMT::eliminarComentarios(linea);
-              if (!ComprobarFicheroMT::lineaCompletaDeEspacios(linea)) break;
-            }            
-          }
-          analizarYRellenarConjuntoDeEstadosFinales(linea);
-          break;
+        analizarYRellenarConjuntoDeEstadosFinales(linea);
+        break;
+      case 6:
+        iss >> numCintas;
+        if (!(iss.fail() || numCintas <= 0)) { // Saltarse Fila opcional
+          contador++;
+          while (std::getline(fichero, linea)) {
+            ComprobarFicheroMT::eliminarComentarios(linea);
+            if (!ComprobarFicheroMT::lineaCompletaDeEspacios(linea)) break;
+          }            
+        }
+        analizarYRellenarTransiciones(linea);
+        break;
       default: // Transiciones hasta final de fichero
         analizarYRellenarTransiciones(linea);
         break;
