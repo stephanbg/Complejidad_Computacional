@@ -29,10 +29,10 @@ Una vez que el programa haya sido compilado correctamente, podrás ejecutarlo pr
 ```bash
 ./main <ruta_a_fichero_MT> <cadenas_infinitas_separadas_por_espacios>
 ```
-- Segundo parámetro: <ruta_a_fichero_MT>
-Este parámetro debe contener la ruta al archivo que describe la Máquina de Turing. Este archivo incluye la definición de la Máquina de Turing, como sus estados, transiciones y otros elementos relevantes necesarios para su funcionamiento.
+- **Segundo parámetro**: **<ruta_a_fichero_MT>**
+Este parámetro debe contener la ruta al archivo que describe la Máquina de Turing, en este caso los ejemplos de se encuentran en el directorio `ejemplos-MT`. Este archivo incluye la definición de la Máquina de Turing, como sus estados, transiciones y otros elementos relevantes necesarios para su funcionamiento.
 
-- A partir del tercer parámetro: <cadenas_infinitas_separadas_por_espacios>
+- **A partir del tercer parámetro**: **<cadenas_infinitas_separadas_por_espacios>**
 A partir de este parámetro, se proporcionarán las cadenas que se desean comprobar. La Máquina de Turing utilizará estas cadenas para determinar si son aceptadas o no, basándose en las reglas y la estructura definidas en el archivo anterior.
 
 ***NOTA***: Para la ejecución de la máquina multicinta, es necesario especificar en la línea de comandos cómo estará el contenido de cada cinta. Si deseas que una cinta esté vacía, deberás poner `..`. Para separar las cadenas de cada cinta, utiliza un solo `.`.
@@ -48,6 +48,8 @@ Cuando se introducen parámetros válidos en el programa, este realizará lo sig
 - **Evaluación de Cadenas**: Para cada cadena proporcionada, el programa determinará si es aceptada por la Máquina de Turing definida en el archivo especificado.
   - **Resultado Aceptado**: Si la cadena es aceptada, el programa mostrará el mensaje "ACEPTADA".
   - **Resultado No Aceptado**: Si la cadena no es aceptada, se mostrará un "RECHAZADA".
+
+Además, al final del procesamiento, se mostrarán el estado final de las cintas, lo que permitirá visualizar claramente cómo quedaron las cadenas después de aplicar las reglas de la Máquina de Turing. También se indicará la posición del cabezal de lectura y escritura (L/E) en cada cinta. Esto facilitará la comprensión del funcionamiento del simulador, ya que los usuarios podrán observar los cambios realizados en las cintas y cómo se realizó el desplazamiento del cabezal durante el proceso.
     
 Este enfoque permite tanto una verificación simple de las cadenas como una comprensión más profunda del funcionamiento interno de la máquina cuando se desea observar su comportamiento.
 
@@ -87,7 +89,7 @@ q6 a q3 . R
 q6 b q1 b R
 ```
 
-***Forma de resolverlo***: La estrategia consiste en eliminar los símbolos `a` de la cadena utilizando un símbolo blanco para suplantarlos. Cada vez que se encuentra una `a`, se borra y se mueve el cabezal al extremo de la cinta para eliminar una `b` correspondiente. Este proceso se repite hasta que no queden más `a`s. Al finalizar, si todavía hay `b`s en la cinta, significa que había más `b`s que `a`s, por lo que la cadena es aceptada. Si no quedan `b`s, se rechaza la cadena, ya que esto indica que el número de `a`s era mayor o igual al de `b`s.
+***Forma de resolverlo***: La estrategia consiste en eliminar los símbolos `a` de la cadena utilizando un símbolo blanco para suplantarlos. Cada vez que se encuentra una `a`, se borra y se mueve el cabezal al extremo de la cinta para eliminar una `b` correspondiente. Este proceso se repite hasta que no queden más `a's`. Al finalizar, si todavía hay `b's` en la cinta, significa que había más `b's` que `a's`, por lo que la cadena es aceptada. Si no quedan `b's`, se rechaza la cadena, ya que esto indica que el número de `a's` era mayor o igual al de `b's`.
 
 ---
 
@@ -138,3 +140,22 @@ q2 . . q4 . . R R
 ```
 
 ***Forma de resolverlo***: En la primera cinta se coloca la cadena que queremos comprobar y la segunda cinta se deja vacía. Se inicia contando los símbolos ``a`` en la primera cinta; cada vez que se encuentra uno, se coloca un ``1`` en la segunda cinta y se mueve el cabezal hacia la izquierda. Este proceso continúa hasta llegar al final de la cadena en la primera cinta, donde se coloca un símbolo blanco ``.`` en la segunda cinta para separar las secciones. Luego, se comienza a contar los símbolos ``b`` en la primera cinta. Si no se encuentra ninguna ``b``, se coloca un ``0`` en la segunda cinta. Si se encuentran ``b's``, se coloca un ``1`` en la segunda cinta por cada símbolo ``b`` encontrado, continuando el movimiento a la izquierda hasta alcanzar el extremo de la cadena. Finalmente, se mueven los cabezales de ambas cintas hacia la derecha para situarse al inicio de las cadenas en ambas cintas.
+
+## Nota adicional
+
+* La ejecución de cadenas en una única cinta es bastante intuitiva, como se explicó anteriormente. Sin embargo, a continuación se presentan una serie de ejemplos de cadenas escritas en la línea de comandos para ilustrar el funcionamiento de la Máquina de Turing multicinta:
+
+- **Ejemplo 1: `100011..1001`**
+  - **Cinta 1:** `100011`
+  - **Cinta 2:** vacío (debido a los dos `..`)
+  - **Cinta 3:** `1001`
+
+  En este caso hay tres cintas, ya que los dos puntos (`..`) indican una cinta vacía.
+
+- **Ejemplo 2: `1.01`**
+  - **Cinta 1:** `1`
+  - **Cinta 2:** `01`
+
+  Aquí solo hay dos cintas, dado que un único punto (`.`) significa separación entre las cintas.
+
+En caso de especificar menos cadenas que el número total de cintas, las cintas restantes quedarán vacías de forma predeterminada.
