@@ -3,19 +3,20 @@
  * Escuela Superior de Ingeniería y Tecnología
  * Grado en Ingeniería Informática
  * Complejidad Computacional
- * Práctica 2: Programar un simulador de un autómata con pila
+ * Curso: 4º
+ * Práctica 3: Programar un simulador de una Máquina de Turing determinista
  *
  * @author Stephan Brommer Gutiérrez
- * @since 14 de Octubre de 2024
+ * @since 30 de Octubre de 2024
  * @file comprobarParametros.h
- * @brief Clase para gestionar y validar los parámetros de entrada del simulador de autómatas con pila.
+ * @brief Clase para gestionar y validar los parámetros de entrada de la Máquina de Turing
  * 
  * Esta clase proporciona métodos estáticos para comprobar la cantidad de parámetros 
  * proporcionados en la línea de comandos, verificar la existencia de archivos y 
  * mostrar información de ayuda al usuario.
  * 
- * @see {@link https://campusingenieriaytecnologia2425.ull.es/pluginfile.php/11658/mod_resource/content/25/CC_2425_Practica2.pdf}
- * @see {@link https://github.com/stephanbg/Complejidad_Computacional/tree/main/p02}
+ * @see {@link https://github.com/stephanbg/Complejidad_Computacional/tree/main/p03}
+ * @see {@link https://github.com/stephanbg/Complejidad_Computacional/blob/main/p03/doc/CC_2425_Practica3.pdf}
  */
 
 #pragma once

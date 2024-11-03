@@ -3,19 +3,20 @@
  * Escuela Superior de Ingeniería y Tecnología
  * Grado en Ingeniería Informática
  * Complejidad Computacional
- * Práctica 2: Programar un simulador de un autómata con pila
+ * Curso: 4º
+ * Práctica 3: Programar un simulador de una Máquina de Turing determinista
  *
  * @author Stephan Brommer Gutiérrez
- * @since 14 de Octubre de 2024
+ * @since 30 de Octubre de 2024
  * @file comprobarParametros.cc
- * @brief Clase para gestionar y validar los parámetros de entrada del simulador de autómatas con pila.
+ * @brief Clase para gestionar y validar los parámetros de entrada de la Máquina de Turing.
  * 
  * Esta clase proporciona métodos estáticos para comprobar la cantidad de parámetros 
  * proporcionados en la línea de comandos, verificar la existencia de archivos y 
  * mostrar información de ayuda al usuario.
  * 
- * @see {@link https://campusingenieriaytecnologia2425.ull.es/pluginfile.php/11658/mod_resource/content/25/CC_2425_Practica2.pdf}
- * @see {@link https://github.com/stephanbg/Complejidad_Computacional/tree/main/p02}
+ * @see {@link https://github.com/stephanbg/Complejidad_Computacional/tree/main/p03}
+ * @see {@link https://github.com/stephanbg/Complejidad_Computacional/blob/main/p03/doc/CC_2425_Practica3.pdf}
  */
 
 #include "comprobarParametros.h"
@@ -35,7 +36,7 @@ void ComprobarParametros::comprobarErrores(const int kArgc, char* kArgv[]) {
  * @brief Comprueba si la cantidad de parámetros es válida.
  * 
  * @param kArgc Cantidad de argumentos pasados al programa.
- * @throws std::string Lanza una excepción si no son más de 3 parámetro.
+ * @throws std::string Lanza una excepción si son menos de 3 parámetros.
  */
 void ComprobarParametros::comprobarCantidadParametros(const int kArgc) {
   const std::string kError = "Cantidad de parámetros.";
@@ -62,6 +63,10 @@ void ComprobarParametros::comprobarExistenciaFichero(const std::string& kRutaFic
  * @brief Lanza un mensaje de ayuda al usuario.
  */
 void ComprobarParametros::help() {
-  std::cout << "El programa tiene que ser ejecutado de la siguiente manera:" << std::endl;
-  std::cout << "./main (Fichero MT) (cadenas infinitas separadas por espacios)" << std::endl;
+  std::cout << "El programa debe ejecutarse de la siguiente manera:" << std::endl;
+  std::cout << "./main <Fichero_MT> <cadenas_infinita_separadas_por_espacios>" << std::endl;
+  std::cout << "\nNOTA: Si el fichero es de tipo MultiCinta:" << std::endl;
+  std::cout << "1. Para representar una cinta vacía, utiliza '..' en la línea de comandos." << std::endl;
+  std::cout << "2. Para indicar qué cadenas van en diferentes cintas, separa las cadenas" << std::endl;
+  std::cout << "   utilizando un único punto ('.')." << std::endl;
 }

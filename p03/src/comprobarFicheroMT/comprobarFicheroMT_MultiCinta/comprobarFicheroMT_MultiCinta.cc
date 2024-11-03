@@ -3,16 +3,34 @@
  * Escuela Superior de Ingeniería y Tecnología
  * Grado en Ingeniería Informática
  * Complejidad Computacional
- * Práctica 3:
+ * Curso: 4º
+ * Práctica 3: Programar un simulador de una Máquina de Turing determinista
  *
  * @author Stephan Brommer Gutiérrez
- * @since 31 de Octubre de 2024
- * @file comprobarFicheroMT_LRS.cc
- * @brief
+ * @since 30 de Octubre de 2024
+ * @file comprobarFicheroMT_MultiCinta.cc
+ * @brief Implementación de la clase para comprobar y analizar archivos de Máquina de Turing multicinta.
+ * 
+ * Esta implementación proporciona los métodos necesarios para analizar
+ * las transiciones y configuraciones de una Máquina de Turing multicinta
+ * a partir de un archivo de definición. Se realizan verificaciones de
+ * validez de estados, símbolos y movimientos en cada transición.
+ * 
+ * @see {@link https://github.com/stephanbg/Complejidad_Computacional/tree/main/p03}
+ * @see {@link https://github.com/stephanbg/Complejidad_Computacional/blob/main/p03/doc/CC_2425_Practica3.pdf}
  */
 
 #include "./comprobarFicheroMT_MultiCinta.h"
 
+/**
+ * @brief Constructor de la clase ComprobarFicheroMT_MultiCinta.
+ * 
+ * Inicializa la máquina de Turing multicinta y comienza el análisis
+ * del archivo de configuración especificado.
+ * 
+ * @param kNombreFichero Ruta del archivo de configuración.
+ * @param kNumCintas Número de cintas que tendrá la máquina de Turing.
+ */
 ComprobarFicheroMT_MultiCinta::ComprobarFicheroMT_MultiCinta(
   const std::string& kNombreFichero, const int kNumCintas
 ) {
@@ -20,10 +38,30 @@ ComprobarFicheroMT_MultiCinta::ComprobarFicheroMT_MultiCinta(
   analizarFicheroMT(kNombreFichero);
 }
 
+/**
+ * @brief Método para analizar el archivo de configuración de la máquina de Turing multicinta.
+ * 
+ * Este método invoca la función de la clase base para realizar el análisis
+ * del archivo.
+ * 
+ * @param kNombreFichero Ruta del archivo a analizar.
+ */
 void ComprobarFicheroMT_MultiCinta::analizarFicheroMT(const std::string& kNombreFichero) {
   ComprobarFicheroMT::analizarFicheroMT(kNombreFichero);
 }
 
+/**
+ * @brief Analiza y llena las transiciones de la máquina de Turing multicinta.
+ * 
+ * Este método procesa una línea del archivo de configuración, extrayendo
+ * el estado actual, los símbolos a leer, el estado destino, los símbolos
+ * a escribir y los movimientos a realizar. Realiza verificaciones de
+ * validez y crea nuevas transiciones.
+ * 
+ * @param kLinea Línea del archivo que contiene la definición de una transición.
+ * 
+ * @throw Si hay un error en la definición de la transición.
+ */
 void ComprobarFicheroMT_MultiCinta::analizarYRellenarTransiciones(const std::string& kLinea) {
   const int kNumCintas = maquinaTuring_->getNumCintas();
   std::istringstream iss(kLinea);
@@ -41,6 +79,8 @@ void ComprobarFicheroMT_MultiCinta::analizarYRellenarTransiciones(const std::str
     const std::string kErrorEstadoActual = "Estado actual (" + estadoActualStr + ") no existe.";
     throw (kErrorEstadoActual);
   }  
+  bool esEstadoAceptacionActual = maquinaTuring_->getEstadosFinales().find(estadoActual) != maquinaTuring_->getEstadosFinales().end();
+  estadoActual = Estado(estadoActualStr, esEstadoAceptacionActual);  
   // Símbolos a leer
   for (int i = 0; i < kNumCintas; ++i) {
     if (!(iss >> simbolosLeidosStr[i])) {
@@ -68,6 +108,8 @@ void ComprobarFicheroMT_MultiCinta::analizarYRellenarTransiciones(const std::str
     const std::string kErrorEstadoDestino = "Estado destino (" + estadoDestinoStr + ") no existe.";
     throw (kErrorEstadoDestino);
   }  
+  bool esEstadoAceptacionDestino = maquinaTuring_->getEstadosFinales().find(estadoDestino) != maquinaTuring_->getEstadosFinales().end();
+  estadoDestino = Estado(estadoDestinoStr, esEstadoAceptacionDestino);    
   // Símbolos a escribir
   for (int i = 0; i < kNumCintas; ++i) {  
     if (!(iss >> simbolosEscritosStr[i])) {
@@ -124,7 +166,6 @@ void ComprobarFicheroMT_MultiCinta::analizarYRellenarTransiciones(const std::str
         transicionMulti->getEstadoIni() == estadoActual &&
         transicionMulti->getSimbolosALeer() == simbolosLeidos &&
         transicionMulti->getEstadoFin() == estadoDestino) {
-        delete nuevaTransicion; // Liberar memoria en caso de error
         const std::string kErrorNoDeterminista = "MT no determinista";
         throw (kErrorNoDeterminista);
       }

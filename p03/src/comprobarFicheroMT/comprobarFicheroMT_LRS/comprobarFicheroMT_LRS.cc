@@ -3,26 +3,55 @@
  * Escuela Superior de Ingeniería y Tecnología
  * Grado en Ingeniería Informática
  * Complejidad Computacional
- * Práctica 3:
+ * Curso: 4º
+ * Práctica 3: Programar un simulador de una Máquina de Turing determinista
  *
  * @author Stephan Brommer Gutiérrez
- * @since 31 de Octubre de 2024
+ * @since 30 de Octubre de 2024
  * @file comprobarFicheroMT_LRS.cc
- * @brief
+ * @brief Implementación de la clase ComprobarFicheroMT_LRS para el análisis de archivos de Máquina de Turing de cinta única con LRS.
+ * 
+ * Esta clase se encarga de verificar y rellenar las transiciones de una Máquina de Turing de cinta única, asegurándose de que
+ * todos los estados y símbolos sean válidos según el alfabeto definido.
+ * 
+ * @see {@link https://github.com/stephanbg/Complejidad_Computacional/tree/main/p03}
+ * @see {@link https://github.com/stephanbg/Complejidad_Computacional/blob/main/p03/doc/CC_2425_Practica3.pdf}
  */
 
 #include "./comprobarFicheroMT_LRS.h"
 
-
+/**
+ * @brief Constructor de la clase ComprobarFicheroMT_LRS.
+ * 
+ * Inicializa una nueva Máquina de Turing de cinta única (LRS) y analiza el archivo especificado.
+ * 
+ * @param kNombreFichero Ruta del archivo a analizar.
+ */
 ComprobarFicheroMT_LRS::ComprobarFicheroMT_LRS(const std::string& kNombreFichero) {
   maquinaTuring_ = new MaquinaTuringLRS;
   analizarFicheroMT(kNombreFichero);
 }
 
+/**
+ * @brief Analiza el archivo de Máquina de Turing.
+ * 
+ * Llama al método de la clase base para realizar el análisis inicial del archivo.
+ * 
+ * @param kNombreFichero Ruta del archivo a analizar.
+ */
 void ComprobarFicheroMT_LRS::analizarFicheroMT(const std::string& kNombreFichero) {
   ComprobarFicheroMT::analizarFicheroMT(kNombreFichero);
 }
 
+/**
+ * @brief Analiza una línea de transiciones y las rellena en la Máquina de Turing.
+ * 
+ * Este método extrae los componentes de una línea que define una transición de la Máquina de Turing,
+ * valida cada uno de ellos, y si todo es correcto, agrega la transición a la máquina.
+ * 
+ * @param kLinea Línea que contiene la definición de la transición.
+ * @throws Si hay errores en la definición de la transición.
+ */
 void ComprobarFicheroMT_LRS::analizarYRellenarTransiciones(const std::string& kLinea) {
   std::istringstream iss(kLinea);
   std::string estadoActualStr, simboloLeidoStr, estadoDestinoStr, simboloEscritoStr, movimientoStr;
@@ -43,6 +72,8 @@ void ComprobarFicheroMT_LRS::analizarYRellenarTransiciones(const std::string& kL
     const std::string kErrorEstadoActual = "Estado actual (" + estadoActualStr + ") no existe.";
     throw (kErrorEstadoActual);
   }
+  bool esEstadoAceptacionActual = maquinaTuring_->getEstadosFinales().find(estadoActual) != maquinaTuring_->getEstadosFinales().end();
+  estadoActual = Estado(estadoActualStr, esEstadoAceptacionActual);
   // Comprobar si el símbolo leído es válido
   if (simboloLeidoStr.size() != 1) {
     const std::string kErrorSizeSimboloLeido = "Símbolo leído (" + simboloLeidoStr + ") tamaño != 1";
@@ -60,6 +91,8 @@ void ComprobarFicheroMT_LRS::analizarYRellenarTransiciones(const std::string& kL
     const std::string kErrorEstadoDestino = "Estado destino (" + estadoDestinoStr + ") no existe.";
     throw (kErrorEstadoDestino);
   }
+  bool esEstadoAceptacionDestino = maquinaTuring_->getEstadosFinales().find(estadoDestino) != maquinaTuring_->getEstadosFinales().end();
+  estadoDestino = Estado(estadoDestinoStr, esEstadoAceptacionDestino);
   // Comprobar si el símbolo escrito es válido
   if (simboloEscritoStr.size() != 1) {
     const std::string kErrorSizeSimboloEscrito = "Símbolo escrito (" + simboloEscritoStr + ") tamaño != 1";
@@ -91,7 +124,6 @@ void ComprobarFicheroMT_LRS::analizarYRellenarTransiciones(const std::string& kL
         transicionLRS->getEstadoIni() == estadoActual &&
         transicionLRS->getSimboloALeer() == simboloLeidoStr[0] &&
         transicionLRS->getEstadoFin() == estadoDestino) {
-        delete nuevaTransicion; // Liberar memoria en caso de error
         const std::string kErrorNoDeterminista = "MT no determinista";
         throw (kErrorNoDeterminista);
       }

@@ -1,8 +1,34 @@
+/**
+ * Universidad de La Laguna
+ * Escuela Superior de Ingeniería y Tecnología
+ * Grado en Ingeniería Informática
+ * Complejidad Computacional
+ * Curso: 4º
+ * Práctica 3: Programar un simulador de una Máquina de Turing determinista
+ *
+ * @author Stephan Brommer Gutiérrez
+ * @since 30 de Octubre de 2024
+ * @file direccion.h
+ * @brief Definición de la clase Direccion.
+ *
+ * Esta clase representa las direcciones posibles en las que 
+ * puede moverse una cabeza de lectura/escritura en una máquina 
+ * de Turing, incluyendo las direcciones "izquierda", "derecha" 
+ * y "quieto".
+ * 
+ * @see {@link https://github.com/stephanbg/Complejidad_Computacional/tree/main/p03}
+ * @see {@link https://github.com/stephanbg/Complejidad_Computacional/blob/main/p03/doc/CC_2425_Practica3.pdf}
+ */
+
 #pragma once
 
 #include <string>
 #include <ostream>
 
+/**
+ * @brief Clase que representa la dirección de movimiento de una cabeza 
+ * de lectura/escritura en una máquina de Turing.
+ */
 class Direccion {
  public:
   enum Valor {

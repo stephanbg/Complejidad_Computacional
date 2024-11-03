@@ -3,13 +3,21 @@
  * Escuela Superior de Ingeniería y Tecnología
  * Grado en Ingeniería Informática
  * Complejidad Computacional
- * Práctica 3:
+ * Curso: 4º
+ * Práctica 3: Programar un simulador de una Máquina de Turing determinista
  *
  * @author Stephan Brommer Gutiérrez
- * @since 31 de Octubre de 2024
+ * @since 30 de Octubre de 2024
  * @file comprobarFicheroMT.h
- * @brief
+ * @brief Clase para validar y procesar archivos de definición de Máquinas de Turing.
  * 
+ * Esta clase proporciona métodos para analizar la estructura y los componentes
+ * de un archivo que define una Máquina de Turing, como estados, alfabetos,
+ * transiciones, etc. Se utiliza para crear instancias de Máquina de Turing
+ * y detectar errores en la definición del archivo.
+ * 
+ * @see {@link https://github.com/stephanbg/Complejidad_Computacional/tree/main/p03}
+ * @see {@link https://github.com/stephanbg/Complejidad_Computacional/blob/main/p03/doc/CC_2425_Practica3.pdf}
  */
 
 #pragma once
@@ -23,6 +31,10 @@
 class ComprobarFicheroMT_LRS;
 class ComprobarFicheroMT_MultiCinta;
 
+/**
+ * @brief Clase base para verificar la validez de archivos de definición de
+ * Máquinas de Turing de un solo cinta o múltiples cintas.
+ */
 class ComprobarFicheroMT {
  public:
   static ComprobarFicheroMT* crearComprobador(const std::string& kNombreFichero);
