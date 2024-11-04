@@ -103,9 +103,11 @@ void Cinta::moverCabezal(const Direccion& kDir) {
  */
 void Cinta::imprimir() const {
   std::cout << "|";
-  for (auto a : cinta_) {
-    std::cout << a << "|";
+  for (size_t i = 0; i < cinta_.size(); ++i) {
+    if (i == posicionCabezal_) std::cout << "\033[1;31m" << cinta_[i] << "\033[0m";
+    else std::cout << cinta_[i];
+    std::cout << "|";
   }
   std::cout << std::endl;
-  std::cout << "Posicion Cabezal: " << posicionCabezal_ << std::endl;
+  std::cout << "Posición Cabezal: " << posicionCabezal_ << std::endl;
 }

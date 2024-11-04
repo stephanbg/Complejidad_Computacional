@@ -121,12 +121,12 @@ Ejercicio resuelto con dos cintas:
 ![MT-Eje2](doc/MT_2.png)
 
 ```bash
-q0 q1 q2 q3 q4
+q0 q1 q2 q3 q4 q5 q6 q7 q8 q9
 a b
 a b 0 1 .
 q0
 .
-q3 q4
+q9
 2
 q0 a . q0 a 1 R L
 q0 b . q0 b . R S
@@ -137,9 +137,36 @@ q1 . . q3 . 0 R S
 q2 b . q2 b 1 L L
 q2 a . q2 a . L S
 q2 . . q4 . . R R
+q3 a 0 q3 0 . R R
+q3 a 1 q3 1 . R R
+q3 b 0 q3 0 . R R
+q3 b 1 q3 1 . R R
+q3 a . q5 . . R R
+q3 b . q5 . . R R
+q3 . . q5 . . R R
+q4 a 0 q4 0 . R R
+q4 a 1 q4 1 . R R
+q4 b 0 q4 0 . R R
+q4 b 1 q4 1 . R R
+q4 a . q5 . . R R
+q4 b . q5 . . R R
+q4 . . q5 . . R R
+q5 . . q5 . . L L
+q5 . 1 q5 1 . R R
+q5 b 1 q5 1 . R R
+q5 a 1 q5 1 . R R
+q5 1 . q6 1 . L L
+q6 1 . q6 1 . L L
+q6 . . q7 . . L L
+q7 1 . q7 1 . L L
+q7 0 . q7 0 . L L
+q7 . . q8 . . R R
+q8 . . q8 . . R R
+q8 1 . q9 1 . S S
+q8 0 . q9 0 . S S
 ```
 
-***Forma de resolverlo***: En la primera cinta se coloca la cadena que queremos comprobar y la segunda cinta se deja vacía. Se inicia contando los símbolos ``a`` en la primera cinta; cada vez que se encuentra uno, se coloca un ``1`` en la segunda cinta y se mueve el cabezal hacia la izquierda. Este proceso continúa hasta llegar al final de la cadena en la primera cinta, donde se coloca un símbolo blanco ``.`` en la segunda cinta para separar las secciones. Luego, se comienza a contar los símbolos ``b`` en la primera cinta. Si no se encuentra ninguna ``b``, se coloca un ``0`` en la segunda cinta. Si se encuentran ``b's``, se coloca un ``1`` en la segunda cinta por cada símbolo ``b`` encontrado, continuando el movimiento a la izquierda hasta alcanzar el extremo de la cadena. Finalmente, se mueven los cabezales de ambas cintas hacia la derecha para situarse al inicio de las cadenas en ambas cintas.
+***Forma de resolverlo***: Para contar los símbolos `a` y `b` en una cadena dada utilizando una máquina de Turing con dos cintas, comenzamos configurando la primera cinta con la cadena a analizar y dejando la segunda cinta vacía. Iniciamos el proceso contando los símbolos `a` en la primera cinta de izquierda a derecha; cada vez que encontramos un `a`, escribimos un 1 en la segunda cinta y movemos el cabezal hacia la izquierda. Este conteo continúa hasta que llegamos al final de la cadena, momento en el cual colocamos un símbolo blanco `.` en la segunda cinta para separar las secciones. Luego, comenzamos a contar los símbolos `b` en la primera cinta. Si no encontramos ningún símbolo `b`, escribimos un 0 en la segunda cinta. Si hay `b`, repetimos el proceso, colocando un 1 en la segunda cinta por cada `b` encontrada y moviendo el cabezal hacia la izquierda hasta llegar al extremo de la cadena. A continuación, comenzamos la etapa de copiar el resultado, a partir de los estados q3 y q4, empezamos a copiar el resultado de la cinta 2 en la cinta 1. Movemos el cabezal de la cinta 2 de izquierda a derecha, copiando todos los símbolos en la cinta 1 y borrándolos de la cinta 2, hasta encontrar el símbolo blanco que separa los conteos; si encontramos otro blanco consecutivo, sabemos que hemos llegado al final de la cadena, sino, simplemente será la separación de conteo y empezaremos a copiar el número de `a's`. Finalmente, para volver a situar el cabezal al inicio de la cadena realizamos el mismo patrón pero en este caso de derecha a izquierda, pero solamente moviéndonos, sin tener que copiar de nuevo.
 
 ## Nota adicional
 
