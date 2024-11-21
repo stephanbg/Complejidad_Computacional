@@ -1,0 +1,9 @@
+{
+    "number_variables": 5,
+    "number_clauses": 3,
+    "clauses": [
+      [ { "format": 0, "variable": 1 }, { "format": 1, "variable": 2 }, { "format": 0, "variable": 5 } ],
+      [ { "format": 0, "variable": 2 } ],
+      [ { "format": 1, "variable": 3 }, { "format": 1, "variable": 4 } ]
+    ]
+}  
