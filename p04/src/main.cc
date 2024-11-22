@@ -38,16 +38,21 @@ int main(int argc, char* argv[]) {
   nlohmann::json json;
   input >> json;
 
-  SAT sat(json);
-  std::cout << sat << std::endl;
+  try {
+    SAT sat(json);
+    std::cout << sat << std::endl;
 
-  std::vector<bool> solution(sat.GetNumVariables());
-  if (sat.Solve(solution)) {
-    std::cout << "Satisfacible." << std::endl;
-    for (size_t i = 0; i < solution.size(); i++) {
-      std::cout << "x" << i + 1 << " = " << (solution[i] ? "True" : "False") << std::endl;
-    }
-  } else std::cout << "Insatisfacible." << std::endl;
+    std::vector<bool> solution(sat.GetNumVariables());
+    if (sat.Solve(solution)) {
+      std::cout << "Satisfacible." << std::endl;
+      for (size_t i = 0; i < solution.size(); i++) {
+        std::cout << "x" << i + 1 << " = " << (solution[i] ? "True" : "False") << std::endl;
+      }
+    } else std::cout << "Insatisfacible." << std::endl;
+  } catch (const std::invalid_argument& e) {
+    std::cerr << e.what() << std::endl;
+    return 1;
+  }
 
   return 0;
 }

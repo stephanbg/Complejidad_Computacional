@@ -17,5 +17,4 @@ class Clause {
   friend std::ostream& operator<<(std::ostream& output, const Clause& clause);
  private:
   std::vector<Variable> variables_;
-  // bool isValidClause() const;
 };
