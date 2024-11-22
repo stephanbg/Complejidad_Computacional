@@ -41,5 +41,13 @@ int main(int argc, char* argv[]) {
   SAT sat(json);
   std::cout << sat << std::endl;
 
+  std::vector<bool> solution(sat.GetNumVariables());
+  if (sat.Solve(solution)) {
+    std::cout << "Satisfacible." << std::endl;
+    for (size_t i = 0; i < solution.size(); i++) {
+      std::cout << "x" << i + 1 << " = " << (solution[i] ? "True" : "False") << std::endl;
+    }
+  } else std::cout << "Insatisfacible." << std::endl;
+
   return 0;
 }

@@ -11,8 +11,14 @@ class SAT {
   SAT(const int num_variables) : num_variables_(num_variables), clauses_() {}
   SAT(const nlohmann::json& json);
 
+  int GetNumVariables() const { return num_variables_; }
+
   friend std::ostream& operator<<(std::ostream& output, const SAT& sat);
+
+  bool Solve(std::vector<bool>& solution, int var_index = 0) const;
  private:
   int num_variables_;
   std::vector<Clause> clauses_;
+
+  bool IsSatisfiable(const std::vector<bool>& assignment) const;
 };

@@ -12,6 +12,8 @@ class Clause {
   Clause() : variables_() {}
   Clause(const nlohmann::json& json);
 
+  std::vector<Variable> GetVariables() const { return variables_; }
+
   friend std::ostream& operator<<(std::ostream& output, const Clause& clause);
  private:
   std::vector<Variable> variables_;
