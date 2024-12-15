@@ -1,3 +1,23 @@
+/**
+ * Universidad de La Laguna
+ * Escuela Superior de Ingeniería y Tecnología
+ * Grado en Ingeniería Informática
+ * Complejidad Computacional
+ * Curso: 4º
+ * Práctica 4: Resolver algoritmo SAT
+ *
+ * @author Aday Cuesta Correa
+ * @author Stephan Brommer Gutiérrez
+ * @author Sofía De Fuentes Rosella
+ * @since 1 de Diciembre de 2024
+ * @file sat.cc
+ * @brief Implementación de la clase SAT, que representa un problema de satisfacibilidad
+ *        booleana (SAT) y proporciona métodos para su resolución. Permite manejar
+ *        el número de variables y las cláusulas que conforman el problema, y ofrece 
+ *        una función para resolver el problema mediante backtracking.
+ * 
+ * @see {@link https://github.com/stephanbg/Complejidad_Computacional/edit/main/p04}
+ */
 
 #include "sat.h"
 
@@ -10,16 +30,13 @@ SAT::SAT(const nlohmann::json& json) {
     throw std::invalid_argument("Error: Formato incorrecto de número de variables.");
   }
   num_variables_ = json["number_variables"];
-
   if (!json.contains("clauses") || !json["clauses"].is_array() || json["clauses"].empty()) {
     throw std::invalid_argument("Error: Formato incorrecto de cláusulas.");
   }
-
   for (const auto& clause_json : json["clauses"]) {
     clauses_.emplace_back(clause_json);
   }
 }
-
 
 /**
  * @brief Sobrecarga del operador de salida
@@ -37,7 +54,6 @@ std::ostream& operator<<(std::ostream& output, const SAT& sat) {
   return output;
 }
 
-
 /**
  * @brief Resuelve el problema SAT
  * @param solution Vector con la solución
@@ -46,16 +62,12 @@ std::ostream& operator<<(std::ostream& output, const SAT& sat) {
  */
 bool SAT::Solve(std::vector<bool>& solution, int var_index) const {
   if (var_index == num_variables_) return IsSatisfiable(solution);
-
   solution[var_index] = false;
   if (Solve(solution, var_index + 1)) return true;
-
   solution[var_index] = true;
   if (Solve(solution, var_index + 1)) return true;
-
   return false;
 }
-
 
 /**
  * @brief Comprueba si una asignación es satisfacible
@@ -68,7 +80,6 @@ bool SAT::IsSatisfiable(const std::vector<bool>& solution) const {
     for (const auto& variable : clause.GetVariables()) {
       bool value = solution[variable.GetId() - 1];
       if (variable.IsNegated()) value = !value;
-
       clause_satisfied = clause_satisfied || value;
       if (clause_satisfied) break;
     }
