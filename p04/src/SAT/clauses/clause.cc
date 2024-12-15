@@ -1,6 +1,24 @@
+/**
+ * Universidad de La Laguna
+ * Escuela Superior de Ingeniería y Tecnología
+ * Grado en Ingeniería Informática
+ * Complejidad Computacional
+ * Curso: 4º
+ * Práctica 4: Resolver algoritmo SAT
+ *
+ * @author Aday Cuesta Correa
+ * @author Stephan Brommer Gutiérrez
+ * @author Sofía De Fuentes Rosella
+ * @since 1 de Diciembre de 2024
+ * @file clause.cc
+ * @brief Implementación de la clase Clause, que representa una cláusula en un 
+ *        problema de satisfacibilidad (SAT). Una cláusula es una disyunción de 
+ *        variables booleanas, cada una de las cuales puede estar negada o no.
+ * 
+ * @see {@link https://github.com/stephanbg/Complejidad_Computacional/edit/main/p04}
+ */
 
 #include "clause.h"
-
 
 /**
  * @brief Constructor de la clase Clause
@@ -11,7 +29,6 @@ Clause::Clause(const nlohmann::json& json) {
     variables_.emplace_back(var_json);
   }
 }
-
 
 /**
  * @brief Sobrecarga del operador de salida
