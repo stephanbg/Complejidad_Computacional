@@ -3,10 +3,16 @@
 # Grado en Ingeniería Informática
 # Asignatura: Complejidad Computacional
 # Curso: 4º
-# Práctica 3: Programar un simulador de una Máquina de Turing determinista
-# Autor: Stephan Brommer Gutiérrez
-# Correo: alu0101493497@ull.es
-# Fecha: 30 de Octubre
+# Práctica 4: Resolver algoritmo SAT
+# Autores:
+#	   Aday Cuesta Correa
+#	   Stephan Brommer Gutiérrez
+#	   Sofía De Fuentes Rosella
+# Correos:
+#	   alu0101483887@ull.edu.es
+#	   alu0101493497@ull.edu.es
+#	   alu0101480619@ull.edu.es
+# Fecha: 18 de Diciembre de 2024
 # Archivo GNUMakefile
 
 CXX = g++                                     # The C++ compiler command
