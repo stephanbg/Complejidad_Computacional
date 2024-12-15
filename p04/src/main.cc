@@ -1,3 +1,20 @@
+/**
+ * Universidad de La Laguna
+ * Escuela Superior de Ingeniería y Tecnología
+ * Grado en Ingeniería Informática
+ * Complejidad Computacional
+ * Curso: 4º
+ * Práctica 4: Resolver algoritmo SAT
+ *
+ * @author Aday Cuesta Correa
+ * @author Stephan Brommer Gutiérrez
+ * @author Sofía De Fuentes Rosella
+ * @since 1 de Diciembre de 2024
+ * @file main.cc
+ * @brief Fichero principal para resolver el problema del algoritmo SAT.
+ * 
+ * @see {@link https://github.com/stephanbg/Complejidad_Computacional/edit/main/p04}
+ */
 
 #include <iostream>
 
@@ -19,7 +36,6 @@ void Usage(int argc, char* argv[]) {
   }
 }
 
-
 /**
  * @brief Función principal.
  * @param argc Número de argumentos.
@@ -28,20 +44,16 @@ void Usage(int argc, char* argv[]) {
  */
 int main(int argc, char* argv[]) {
   Usage(argc, argv);
-
   std::ifstream input(argv[1]);
   if (!input.is_open()) {
     std::cerr << "Error: No se pudo abrir el fichero de entrada." << std::endl;
     return 1;
   }
-
   nlohmann::json json;
   input >> json;
-
   try {
     SAT sat(json);
     std::cout << sat << std::endl;
-
     std::vector<bool> solution(sat.GetNumVariables());
     if (sat.Solve(solution)) {
       std::cout << "Satisfacible." << std::endl;
@@ -53,6 +65,5 @@ int main(int argc, char* argv[]) {
     std::cerr << e.what() << std::endl;
     return 1;
   }
-
   return 0;
 }
